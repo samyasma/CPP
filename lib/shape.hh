@@ -12,6 +12,8 @@ public:
 	Shape(double x, double y):_x(x), _y(y){}
 	virtual ~Shape(){std::cout << "~S" << std::endl;}
 	virtual void update() = 0;
+	double getX(){return _x;}
+	double getY(){return _y;}
 protected:
 	double _x;
 	double _y;

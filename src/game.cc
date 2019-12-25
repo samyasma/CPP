@@ -41,14 +41,19 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 		isrunning = true;
 	}
+
+	// Création du fond ainsi que du personnage principal
+
 	background_im = SDL_CreateTextureFromSurface(renderer, terrain1->getSurface());
-	Personnage* player_samy = new Personnage(0,0,100,100, "./images/samy.png");
+	Personnage* player_samy = new Personnage(100, 400,100,100, "./images/samy.png");
 	v.push_back(player_samy); // on ajoute Samy à la liste des personnages existants dans le jeu
 	player_im = SDL_CreateTextureFromSurface(renderer, player_samy->getSurface());
 	//SDL_Surface* tmpsurface = IMG_Load("./images/samy.png");
 	//player = SDL_CreateTextureFromSurface(renderer, tmpsurface);
 	//SDL_FreeSurface(tmpsurface);
 	player_samy->freeS();
+
+	// Fin de la création
 }
 
 void Game::handleEvents(){
@@ -64,8 +69,12 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
-	destR.w = 128;
-	destR.h = 128;
+	for(auto p : v){
+		destR.w = 128;
+		destR.h = 128;
+		destR.x = p->getX();
+		destR.y = p->getY();
+	}
 }
 
 void Game::render(){
