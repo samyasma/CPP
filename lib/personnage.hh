@@ -20,12 +20,16 @@ class Personnage: public Shape{
   SDL_Surface* getSurface(){return surface;}
   bool estVivant(){return _vivant;}
   SDL_Rect& getdestR(){return destR;}
+  void jump(){_jump=true;_up = true;}
   void setPicture(SDL_Renderer*& renderer){player_im = SDL_CreateTextureFromSurface(renderer, surface);SDL_FreeSurface(surface);}
   SDL_Texture* getTexture(){return player_im;}
   protected:
     int _vie;
     int _stamina;
     bool _vivant;
+    bool _jump = false;
+    bool _up = false;
+    bool _down = false;
     SDL_Surface* surface;
     SDL_Rect destR, srcR;
     SDL_Texture* player_im = nullptr;

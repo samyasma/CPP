@@ -88,6 +88,7 @@ void Game::generateSmoke(){
 }
 
 void Game::update(){
+	samy->update();
 	if (v.size() <= 10)
 	{
 		this->generateSmoke();
