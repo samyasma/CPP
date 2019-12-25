@@ -16,6 +16,7 @@ public:
 	void decrease();
 	void Attack(SDL_Renderer*& renderer);
 	void reset(SDL_Renderer*& renderer);
+	void ramasse(SDL_Renderer*& renderer);
 private:
 	int id;
 };

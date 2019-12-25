@@ -21,6 +21,7 @@ void Samy::update(SDL_Event event, SDL_Renderer*& renderer){
             }
             break;
         case SDLK_SPACE: this->Attack(renderer); break;
+        case SDLK_LSHIFT: this->ramasse(renderer);break;
         //case SDLK_DOWN:  _y+=5; break;
     }
     destR.w = 128;
@@ -59,8 +60,13 @@ void Samy::decrease(){
     _stamina -= 0.05;
 }
 
-void Samy::Attack(SDL_Renderer*& renderer){
+void Samy::ramasse(SDL_Renderer*& renderer){
     surface = IMG_Load("./images/samy_f.png");
+    this->setPicture(renderer);
+}
+
+void Samy::Attack(SDL_Renderer*& renderer){
+    surface = IMG_Load("./images/samy_p.png");
     this->setPicture(renderer);
 }
 
