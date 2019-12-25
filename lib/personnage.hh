@@ -12,7 +12,7 @@ class Personnage: public Shape{
   void Attack();
   void Defense();
   virtual ~Personnage();
-  virtual void update(SDL_Event event);
+  virtual void update(SDL_Event event) = 0;
   void Jump();
   void DoDamage();
   void TakeDamage();

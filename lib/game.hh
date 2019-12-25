@@ -11,6 +11,8 @@
 #include "../lib/personnage.hh"
 #include "../lib/terrain.hh"
 #include "../lib/smoke.hh"
+#include "../lib/samy.hh"
+
 
 class Game{
 public:
@@ -28,7 +30,7 @@ private:
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	std::vector<Smoke*> v;
-	Personnage* samy;
+	Samy* samy;
 };
 
 #endif

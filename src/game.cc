@@ -49,7 +49,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 	background_im = SDL_CreateTextureFromSurface(renderer, terrain1->getSurface());
 
-	Personnage* player_samy = new Personnage(100, 400,100,100, "./images/samy.png");
+	Samy* player_samy = new Samy(100, 400);
 	player_samy->setPicture(renderer);
 	//v.push_back(player_samy); // on ajoute Samy à la liste des personnages existants dans le jeu
 	samy = player_samy;
@@ -79,7 +79,7 @@ void Game::handleEvents(){
 
 void Game::generateSmoke(){
 	double x = rand()%800 +1;
-	if(SDL_GetTicks() - timeStart> 5000){
+	if(SDL_GetTicks() - timeStart> 5000){ // générer un Smoke toutes les 5 secondes
 		timeStart = SDL_GetTicks();
 		Smoke* s = new Smoke(x, 400);
 		s->setPicture(renderer);
