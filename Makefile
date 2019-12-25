@@ -1,0 +1,11 @@
+EXEC=game
+SOURCES=$(wildcard src/*.cc)
+OBJECTS=$(SOURCES:.cc=.o)
+CCFLAGS=-Wall `sdl-config --cflags`
+CC=g++
+$(EXEC): $(OBJECTS)
+	$(CC) $(OBJECTS) `pkg-config --cflags --libs sdl2` -o $(EXEC)
+%.o: %.cc
+	$(CC) $(CCFLAGS) -c $< -o $@
+clean:
+	rm -f $(OBJECTS) $(EXEC)

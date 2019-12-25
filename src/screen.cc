@@ -1,4 +1,4 @@
-#include "screen.hh"
+#include "../lib/screen.hh"
 
 
 void Screen :: _line(SDL_Surface *surf,
