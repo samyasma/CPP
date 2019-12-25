@@ -1,7 +1,11 @@
 #include "../lib/game.hh"
 
+SDL_Texture* player;
+SDL_Rect srcR, destR;
+
+
 Game::Game(){
-	
+
 }
 
 Game::~Game(){
@@ -33,9 +37,10 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 		}
 
 		isrunning = true;
-	}else{
-		isrunning = false;
 	}
+	SDL_Surface* tmpsurface = IMG_Load("./images/samy.png");
+	player = SDL_CreateTextureFromSurface(renderer, tmpsurface);
+	SDL_FreeSurface(tmpsurface);
 }
 
 void Game::handleEvents(){
@@ -51,12 +56,14 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
-
+	destR.w = 128;
+	destR.h = 128;
 }
 
 void Game::render(){
 	SDL_RenderClear(renderer);
 	// création des objets etc
+	SDL_RenderCopy(renderer, player, NULL, &destR);
 	SDL_RenderPresent(renderer);
 }
 
