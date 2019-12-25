@@ -2,6 +2,7 @@
 #include <string>
 #include "../lib/personnage.hh"
 
+
 Personnage::Personnage(): Shape(){
   _vie=100;
   _stamina=100;

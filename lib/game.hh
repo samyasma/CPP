@@ -5,6 +5,9 @@
 #include "SDL2/SDL_image.h"
 #include <iostream>
 #include <stdio.h>
+#include <vector>
+#include "../lib/personnage.hh"
+#include "../lib/terrain.hh"
 
 class Game{
 public:
@@ -21,6 +24,7 @@ private:
 	bool isrunning;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
+	std::vector<Personnage*> v;
 };
 
 #endif
