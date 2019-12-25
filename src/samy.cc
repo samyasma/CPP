@@ -7,7 +7,12 @@ void Samy::update(SDL_Event event){
     {
         case SDLK_LEFT:  _x-=5; break;
         case SDLK_RIGHT: _x+=5; break;
-        case SDLK_UP: this->jump(); break;
+        case SDLK_UP: 
+            if (!_jump)
+            {
+                this->jump(); 
+            }
+            break;
         //case SDLK_DOWN:  _y+=5; break;
     }
     destR.w = 128;
@@ -38,6 +43,6 @@ void Samy::update(){
             }
         }
     }
-    destR.x = _x;
+    //destR.x = _x;
     destR.y = _y;
 }

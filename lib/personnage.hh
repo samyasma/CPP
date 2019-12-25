@@ -23,6 +23,7 @@ class Personnage: public Shape{
   void jump(){_jump=true;_up = true;}
   void setPicture(SDL_Renderer*& renderer){player_im = SDL_CreateTextureFromSurface(renderer, surface);SDL_FreeSurface(surface);}
   SDL_Texture* getTexture(){return player_im;}
+  bool getJump(){return _jump;}
   protected:
     int _vie;
     int _stamina;
