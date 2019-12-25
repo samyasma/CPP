@@ -88,36 +88,36 @@ void Game::generateSmoke(){
 }
 
 void Game::update(){
-	samy->update();
+	samy->update(); // gestion du saut
 	if (v.size() <= 10)
 	{
-		this->generateSmoke();
+		this->generateSmoke(); // ajouter un smoke mais pas plus de 10
 	}
 }
 
-void Game::setText(){ // fonction pour ajouter du texte, ne marche pas
-	TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24); //this opens a font style and sets a size
+// void Game::setText(){ // fonction pour ajouter du texte, ne marche pas
+// 	TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24); //this opens a font style and sets a size
 
-	SDL_Color Black = {0, 0, 0};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
+// 	SDL_Color Black = {0, 0, 0};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
 
-	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "STAMINA", Black); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
+// 	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "STAMINA", Black); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
 
-	SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
+// 	SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
 
-	SDL_Rect Message_rect; //create a rect
-	Message_rect.x = 20;  //controls the rect's x coordinate 
-	Message_rect.y = 405; // controls the rect's y coordinte
-	Message_rect.w = 50; // controls the width of the rect
-	Message_rect.h = 20; // controls the height of the rect
+// 	SDL_Rect Message_rect; //create a rect
+// 	Message_rect.x = 20;  //controls the rect's x coordinate 
+// 	Message_rect.y = 405; // controls the rect's y coordinte
+// 	Message_rect.w = 50; // controls the width of the rect
+// 	Message_rect.h = 20; // controls the height of the rect
 
-	//Mind you that (0,0) is on the top left of the window/screen, think a rect as the text's box, that way it would be very simple to understance
+// 	//Mind you that (0,0) is on the top left of the window/screen, think a rect as the text's box, that way it would be very simple to understance
 
-	//Now since it's a texture, you have to put RenderCopy in your game loop area, the area where the whole code executes
+// 	//Now since it's a texture, you have to put RenderCopy in your game loop area, the area where the whole code executes
 
-	SDL_RenderCopy(renderer, Message, NULL, &Message_rect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
-	SDL_FreeSurface(surfaceMessage);
-	//SDL_FreeTexture(Message);
-}
+// 	SDL_RenderCopy(renderer, Message, NULL, &Message_rect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
+// 	SDL_FreeSurface(surfaceMessage);
+// 	//SDL_FreeTexture(Message);
+// }
 
 void Game::setHealthStamina(){
 
@@ -168,15 +168,14 @@ void Game::setHealthStamina(){
 void Game::render(){
 	SDL_RenderClear(renderer);
 	// disposition des objets A JOUR, toujours mettre le background au début
-	SDL_RenderCopy(renderer, background_im, NULL, NULL);
-	this->setHealthStamina();
-	this->setText();
+	SDL_RenderCopy(renderer, background_im, NULL, NULL); // placer le background
+	this->setHealthStamina(); // placer les barres de health et stamina
+	//this->setText();
 	for(auto perso : v){
-		SDL_RenderCopy(renderer, perso->getTexture(), NULL, &perso->getdestR());
+		SDL_RenderCopy(renderer, perso->getTexture(), NULL, &perso->getdestR()); // copier tout les 'smokes' dans la liste de smokes 
 	}
-	//samy->setPicture(renderer);
-	SDL_RenderCopy(renderer, samy->getTexture(), NULL, &samy->getdestR());
-	SDL_RenderPresent(renderer);
+	SDL_RenderCopy(renderer, samy->getTexture(), NULL, &samy->getdestR()); // placer Samy
+	SDL_RenderPresent(renderer); // afficher le render
 }
 
 void Game::clean(){
