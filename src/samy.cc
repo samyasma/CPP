@@ -5,7 +5,11 @@
 const int MAX_HEIGHT = 270; // niveau max quand on saute
 const int GROUND = 400; // niveu du sol
 
-void Samy::update(SDL_Event event){
+void Samy::update(SDL_Event event, SDL_Renderer*& renderer){
+    if (event.type == SDL_KEYUP)
+    {
+        this->reset(renderer);
+    }
 	switch (event.key.keysym.sym)
     {
         case SDLK_LEFT:  _x-=5; break;
@@ -16,6 +20,7 @@ void Samy::update(SDL_Event event){
                 this->jump(); 
             }
             break;
+        case SDLK_SPACE: this->Attack(renderer); break;
         //case SDLK_DOWN:  _y+=5; break;
     }
     destR.w = 128;
@@ -52,4 +57,14 @@ void Samy::update(){
 
 void Samy::decrease(){
     _stamina -= 0.05;
+}
+
+void Samy::Attack(SDL_Renderer*& renderer){
+    surface = IMG_Load("./images/samy_f.png");
+    this->setPicture(renderer);
+}
+
+void Samy::reset(SDL_Renderer*& renderer){
+    surface = IMG_Load("./images/samy.png");
+    this->setPicture(renderer);
 }

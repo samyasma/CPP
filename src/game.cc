@@ -71,9 +71,9 @@ void Game::handleEvents(){
 			isrunning = false;
 			break;
 		case SDL_KEYDOWN:
-			samy->update(event);
-		default:
-			break;
+			samy->update(event, renderer);
+		case SDL_KEYUP:
+			samy->update(event, renderer);
 	}
 }
 
@@ -174,6 +174,7 @@ void Game::render(){
 	for(auto perso : v){
 		SDL_RenderCopy(renderer, perso->getTexture(), NULL, &perso->getdestR());
 	}
+	//samy->setPicture(renderer);
 	SDL_RenderCopy(renderer, samy->getTexture(), NULL, &samy->getdestR());
 	SDL_RenderPresent(renderer);
 }

@@ -9,10 +9,10 @@ class Personnage: public Shape{
   public :
   Personnage();
   Personnage(double x, double y, int vie, int stamina, const char* path_to_image):Shape(x, y){_vie = vie; _stamina = stamina; _vivant = true;surface = IMG_Load(path_to_image);destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;}
-  void Attack();
+  virtual void Attack(SDL_Renderer*& renderer) = 0;
   void Defense();
   virtual ~Personnage();
-  virtual void update(SDL_Event event) = 0;
+  virtual void update(SDL_Event event, SDL_Renderer*& renderer) = 0;
   void Jump();
   void DoDamage();
   void TakeDamage();
