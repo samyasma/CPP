@@ -24,6 +24,8 @@ class Personnage: public Shape{
   void setPicture(SDL_Renderer*& renderer){player_im = SDL_CreateTextureFromSurface(renderer, surface);SDL_FreeSurface(surface);}
   SDL_Texture* getTexture(){return player_im;}
   bool getJump(){return _jump;}
+  int getStamina(){return _stamina;}
+  int getVie(){return _vie;}
   protected:
     int _vie;
     int _stamina;

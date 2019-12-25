@@ -13,6 +13,7 @@ public:
 	Samy(double x, double y):Personnage(x,y,100,100, "./images/samy.png"){id += 1;}
 	void update(SDL_Event event);
 	void update();
+	void decrease();
 private:
 	int id;
 };

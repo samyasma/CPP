@@ -2,6 +2,9 @@
 #include <string>
 #include "../lib/samy.hh"
 
+const int MAX_HEIGHT = 270; // niveau max quand on saute
+const int GROUND = 400; // niveu du sol
+
 void Samy::update(SDL_Event event){
 	switch (event.key.keysym.sym)
     {
@@ -19,16 +22,16 @@ void Samy::update(SDL_Event event){
 	destR.h = 128;
 	destR.x = _x;
 	destR.y = _y;
-	_stamina -= 0.5;
+    this->decrease();
 }
 
 void Samy::update(){
     if (_jump)
     {
-        if (_y >=300 && _up)
+        if (_y >=MAX_HEIGHT && _up)
         {
             _y-=5;
-            if (_y < 300)
+            if (_y < MAX_HEIGHT)
             {
                 _up = false;
                 _down = true;
@@ -36,7 +39,7 @@ void Samy::update(){
         }else if (_down)
         {
             _y+=5;
-            if (_y >400)
+            if (_y >GROUND)
             {
                 _down = false;
                 _jump = false;
@@ -45,4 +48,8 @@ void Samy::update(){
     }
     //destR.x = _x;
     destR.y = _y;
+}
+
+void Samy::decrease(){
+    _stamina -= 0.05;
 }
