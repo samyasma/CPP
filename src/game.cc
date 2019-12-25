@@ -95,7 +95,7 @@ void Game::update(){
 	}
 }
 
-void Game::setText(){
+void Game::setText(){ // fonction pour ajouter du texte, ne marche pas
 	TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24); //this opens a font style and sets a size
 
 	SDL_Color Black = {0, 0, 0};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
