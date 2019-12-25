@@ -12,7 +12,7 @@ public:
 	~Terrain(){std::cout << "~S" << std::endl;}
 	void freeS(){SDL_FreeSurface(surface);}
 	SDL_Surface* getSurface(){return surface;}
-	void update(){id += 1;}
+	void update(SDL_Event event){id += 1;}
 private:
 	int id;
 	SDL_Surface* surface;

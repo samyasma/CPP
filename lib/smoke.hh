@@ -3,13 +3,15 @@
 
 #include <iostream>
 #include <string>
-#include "smoke.hh"
+#include "../lib/personnage.hh"
 
 class Smoke : public Personnage{
 public:
-	Smoke();
+	//Smoke();
 	~Smoke(){std::cout << "~Sm" << std::endl;}
-	Smoke():Personnage(0,0,50,50, "./images/smoke.png"){id += 1;}
+	Smoke():Personnage(300,400,50,50, "./images/smoke.png"){id += 1;}
+	Smoke(double x, double y):Personnage(x,y,50,50, "./images/smoke.png"){id += 1;}
+	void update(SDL_Event event);
 private:
 	int id;
 };

@@ -6,8 +6,11 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include <stdlib.h>
+#include <time.h>
 #include "../lib/personnage.hh"
 #include "../lib/terrain.hh"
+#include "../lib/smoke.hh"
 
 class Game{
 public:
@@ -18,13 +21,14 @@ public:
 	void update();
 	void render();
 	void clean();
-
+	void generateSmoke();
 	bool running(){return isrunning;}
 private:
 	bool isrunning;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	std::vector<Personnage*> v;
+	std::vector<Smoke*> v;
+	Personnage* samy;
 };
 
 #endif
