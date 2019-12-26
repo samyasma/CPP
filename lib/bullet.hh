@@ -18,9 +18,13 @@ class Bullet: public Shape{
   void setPicture(SDL_Renderer*& renderer){bullet_im = SDL_CreateTextureFromSurface(renderer, surface);SDL_FreeSurface(surface);}
   SDL_Texture* getTexture(){return bullet_im;}
   SDL_Rect& getdestR(){return destR;}
-
+  void setTrue(){is_on_map = true;}
+  void setFalse(){is_on_map = false;}
+  double getX(){return _x;}
+  bool getB(){return is_on_map;}
 protected:
   //int _damage;
+  bool is_on_map = false;
   SDL_Rect destR;
   SDL_Surface* surface;
   SDL_Texture* bullet_im = nullptr;

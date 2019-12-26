@@ -93,20 +93,35 @@ void Game::update(){
 	{
 		this->generateSmoke(); // ajouter un smoke mais pas plus de 10
 	}
-	if(samy->getIsfiring()==true){
+	if(samy->getIsfiring()==true && bulletVec.size() <= 10){
 		Bullet* b=new Bullet(samy->getX(),samy->getY());
+		b->setTrue();
 		bulletVec.push_back(b);
 		samy->setIsfiring(false);
 	}
+	std::cout << bulletVec.size() << std::endl;
+	int i = 0;
 	for(auto a:  bulletVec){
-		std:: cout << "peut etre ici 1" << std::endl;
-		a->update(renderer);
-		std:: cout << "peut etre ici 2" << std::endl;
+		//std:: cout << "peut etre ici 1" << std::endl;
+		if(a != nullptr){
+			if (a->getB())
+			{
+				a->update(renderer);
+			}else{
+				std::cout << "hi" << std::endl;
+				bulletVec.erase(bulletVec.begin()+i);
+				delete a;
+			}
+		}
+		i += 1;
+		//std:: cout << "peut etre ici 2" << std::endl;
 	}
-
 	for (size_t i = 0; i < smokeVec.size(); i++) {
 		for (auto blt: bulletVec){
-			smokeVec[i]->CheckCollsion(blt);
+			if(blt != nullptr){
+				//std::cout << "hey" << std::endl;
+				smokeVec[i]->CheckCollsion(blt);
+			}
 		}
 	}
 

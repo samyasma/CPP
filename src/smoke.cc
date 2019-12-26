@@ -18,6 +18,7 @@ void Smoke::CheckCollsion(Bullet* b) {
 						destR.h = 128;
 						destR.x = _x;
 						destR.y = _y;
+						b->setFalse();
 					}
 					_vivant=false;
 			}
