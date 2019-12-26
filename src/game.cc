@@ -50,7 +50,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 
 	background_im = SDL_CreateTextureFromSurface(renderer, terrain1->getSurface());
-	Samy* player_samy = new Samy(100, 400);
+	Samy* player_samy = new Samy(300, 400);
 	player_samy->setPicture(renderer);
 	//v.push_back(player_samy); // on ajoute Samy à la liste des personnages existants dans le jeu
 	samy = player_samy;
@@ -79,7 +79,10 @@ void Game::handleEvents(){
 
 void Game::generateSmoke(){
 	double x = rand()%800 +1;
-	if(SDL_GetTicks() - timeStart> 5000){ // générer un Smoke toutes les 5 secondes
+	while( x > 200 && x < 600){
+		x = rand()%800 +1;
+	}
+	if(SDL_GetTicks() - timeStart> 300){ // générer un Smoke toutes les 5 secondes
 		timeStart = SDL_GetTicks();
 		Smoke* s = new Smoke(x, 400);
 		s->setPicture(renderer);
@@ -122,6 +125,7 @@ void Game::update(){
 		}
 	}
 	bulletVec = bulletVec_temp;
+	std::vector<Smoke*> smokeVec_alive = {};
 	for (size_t i = 0; i < smokeVec.size(); i++) {
 		for (auto blt: bulletVec){
 			if(blt != nullptr){
@@ -129,8 +133,13 @@ void Game::update(){
 			}
 		}
 		smokeVec[i]->update();
+		if(smokeVec[i]->estVivant()){
+			smokeVec_alive.push_back(smokeVec[i]);
+		}else{
+			delete smokeVec[i];
+		}
 	}
-
+	smokeVec = smokeVec_alive;
 }
 
 
