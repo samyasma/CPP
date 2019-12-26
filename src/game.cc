@@ -128,6 +128,7 @@ void Game::update(){
 				smokeVec[i]->CheckCollsion(blt);
 			}
 		}
+		smokeVec[i]->update();
 	}
 
 }

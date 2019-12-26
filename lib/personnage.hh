@@ -23,6 +23,9 @@ class Personnage: public Shape{
   bool getJump(){return _jump;}
   int getStamina(){return _stamina;}
   int getVie(){return _vie;}
+  void setLeft(){right = false;}
+  void setRight(){right = true;}
+  bool getRight(){return right;}
   protected:
     int _vie;
     int _stamina;
@@ -30,6 +33,7 @@ class Personnage: public Shape{
     bool _jump = false;
     bool _up = false;
     bool _down = false;
+    bool right = true;
     SDL_Surface* surface;
     SDL_Rect destR, srcR;
     SDL_Texture* player_im = nullptr;
