@@ -7,7 +7,7 @@ Uint32 timeStart = SDL_GetTicks();
 
 int killed = 0;
 
-const int difficulty = 5000;
+const int difficulty = 500;
 
 Game::Game(){
 
@@ -90,6 +90,13 @@ void Game::generateSmoke(){
 	}
 }
 
+void Game::weaponupdate(){
+	for (auto a : WeaponVec)
+	{
+		a->update(this->renderer);
+	}
+}
+
 
 void Game::update(){
 	samy->update(); // gestion du saut
@@ -142,6 +149,12 @@ void Game::update(){
 		}
 	}
 	smokeVec = smokeVec_alive;
+	if (killed > 10 && WeaponVec.size() == 0)
+	{
+		Bazooka* bazooka = new Bazooka(rand()%800 +1, 400);
+		WeaponVec.push_back(bazooka);
+	}
+	this->weaponupdate();
 }
 
 
@@ -204,6 +217,9 @@ void Game::render(){
 	SDL_RenderCopy(renderer, samy->getTexture(), NULL, &samy->getdestR()); // placer Samy
 	for (auto a:  bulletVec){
 		SDL_RenderCopy(renderer, a->getTexture(), NULL, &a->getdestR()); // afficher la bullet
+	}
+	for (auto w:  WeaponVec){
+		SDL_RenderCopy(renderer, w->getTexture(), NULL, &w->getdestR()); // afficher la bullet
 	}
 	SDL_RenderPresent(renderer); // afficher le render
 }

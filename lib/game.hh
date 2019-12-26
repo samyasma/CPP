@@ -13,7 +13,7 @@
 #include "../lib/terrain.hh"
 #include "../lib/smoke.hh"
 #include "../lib/samy.hh"
-
+#include "../lib/bazooka.hh"
 
 class Game{
 public:
@@ -28,6 +28,7 @@ public:
 	bool running(){return isrunning;}
 	void setHealthStamina();
 	void setText();
+	void weaponupdate();
 	std::vector<Smoke*> getListSmoke(){return smokeVec;}
 private:
 	bool isrunning;
@@ -35,6 +36,7 @@ private:
 	SDL_Renderer *renderer;
 	std::vector<Smoke*> smokeVec;
 	std::vector<Bullet*> bulletVec;
+	std::vector<Weapon*> WeaponVec = {};
 	Samy* samy;
 };
 

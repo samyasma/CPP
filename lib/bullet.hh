@@ -8,8 +8,8 @@
 class Bullet: public Shape{
   public :
   Bullet();
-  Bullet(double x, double y):Shape(x+40,y-25){surface = IMG_Load("./images/bullet.png");destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;}
-  Bullet(double x, double y, int i):Shape(x-40,y-25){surface = IMG_Load("./images/bullet.png");destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;right = false;}
+  Bullet(double x, double y):Shape(x+40,y-25){destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;}
+  Bullet(double x, double y, int i):Shape(x-40,y-25){destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;right = false;}
   ~Bullet(){std::cout << "~BulletGone" << std::endl;}
   void update(SDL_Event event, SDL_Renderer*& renderer){}
   void update(SDL_Renderer*& renderer);
