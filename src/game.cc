@@ -1,13 +1,13 @@
 #include "../lib/game.hh"
 
-//SDL_Texture* player_im; //juste pour le test, à supprimer plus tard
-//SDL_Rect srcR, destR;
-
 SDL_Texture* background_im;
 Terrain* terrain1 = new Terrain("./images/background1.gif");
 
 Uint32 timeStart = SDL_GetTicks();
 
+int killed = 0;
+
+const int difficulty = 5000;
 
 Game::Game(){
 
@@ -82,7 +82,7 @@ void Game::generateSmoke(){
 	while( x > 200 && x < 600){
 		x = rand()%800 +1;
 	}
-	if(SDL_GetTicks() - timeStart> 300){ // générer un Smoke toutes les 5 secondes
+	if(SDL_GetTicks() - timeStart> difficulty){ // générer un Smoke toutes les 5 secondes
 		timeStart = SDL_GetTicks();
 		Smoke* s = new Smoke(x, 400);
 		s->setPicture(renderer);
@@ -138,6 +138,7 @@ void Game::update(){
 			smokeVec[i]->update(samy, renderer);
 		}else{
 			delete smokeVec[i];
+			killed += 1;
 		}
 	}
 	smokeVec = smokeVec_alive;
@@ -219,5 +220,5 @@ void Game::clean(){
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
-	std::cout << "fin" << std::endl;
+	std::cout << "fin " << killed << std::endl;
 }

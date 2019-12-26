@@ -2,21 +2,6 @@
 
 void Smoke::update(){
 	if(_vie > 0){
-		if (this->getRight())
-		{
-			_x += 2;
-		}else{
-			_x -= 2;
-		}
-
-		if (this->getRight() && _x >= 750)
-		{
-			this->setLeft();
-		}
-
-		else if(!this->getRight() && _x <= 50){
-			this->setRight();
-		}
 		destR.w = 128;
 		destR.h = 128;
 		destR.x = _x;
@@ -36,13 +21,37 @@ void Smoke::Attack(SDL_Renderer*& renderer){
 }
 
 void Smoke::update(Samy*& samy, SDL_Renderer*& renderer){
-	if (abs(samy->getX()-this->getX()) < 20)
+	if (abs(samy->getX()-this->getX()) < 20 && abs(samy->getY()-this->getY())<30)
 	{
 		this->Attack(renderer);
 		samy->decrease();
 	}else{
+		if (samy->getX() > this->getX())
+		{
+			_x += rand()%3+1;
+			this->setRight();
+		}else if(samy->getX() < this->getX()){
+			_x -= rand()%3+1;
+			this->setLeft();
+		}
+		// if (this->getRight())
+		// {
+		// 	_x += 2;	
+		// }else{
+		// 	_x -= 2;
+		// }
+
+		// if (this->getRight() && _x >= 750)
+		// {
+		// 	this->setLeft();
+		// }
+
+		// else if(!this->getRight() && _x <= 50){
+		// 	this->setRight();
+		// }
 		this->reset(renderer);
 	}
+	
 }
 
 void Smoke::reset(SDL_Renderer*& renderer){

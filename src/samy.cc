@@ -6,31 +6,39 @@ const int MAX_HEIGHT = 270; // niveau max quand on saute
 const int GROUND = 400; // niveu du sol
 
 void Samy::update(SDL_Event event, SDL_Renderer*& renderer){
-    if (event.type == SDL_KEYUP)
-    {
-        this->reset(renderer);
-    }
-	switch (event.key.keysym.sym)
-    {
-        case SDLK_LEFT:  _x-=5; this->setLeft();break;
-        case SDLK_RIGHT: _x+=5; this->setRight();break;
-        case SDLK_UP:
-            if (!_jump)
-            {
-                this->jump();
-            }
-            break;
-        case SDLK_SPACE:
-          this->Attack(renderer);
-          break;
-        case SDLK_LSHIFT: this->ramasse(renderer);break;
-        //case SDLK_DOWN:  _y+=5; break;
+    if(_vivant){
+        if (event.type == SDL_KEYUP)
+        {
+            this->reset(renderer);
+        }
+    	switch (event.key.keysym.sym)
+        {
+            case SDLK_LEFT:  _x-=8; this->setLeft();break;
+            case SDLK_RIGHT: _x+=8; this->setRight();break;
+            case SDLK_UP:
+                if (!_jump)
+                {
+                    this->jump();
+                }
+                break;
+            case SDLK_SPACE:
+              this->Attack(renderer);
+              break;
+            case SDLK_LSHIFT: this->ramasse(renderer);break;
+            //case SDLK_DOWN:  _y+=5; break;
+        }
+    }else{
+        this->dead(renderer);
     }
     destR.w = 128;
 	destR.h = 128;
 	destR.x = _x;
 	destR.y = _y;
-    this->decrease();
+}
+
+void Samy::dead(SDL_Renderer*& renderer){
+    surface = IMG_Load("./images/samy_dead.png");
+    this->setPicture(renderer);
 }
 
 void Samy::update(){
@@ -82,4 +90,17 @@ void Samy::reset(SDL_Renderer*& renderer){
         surface = IMG_Load("./images/samyr.png");
     }
     this->setPicture(renderer);
+}
+
+void Samy::decrease(){   
+    if (_stamina > 0)
+    {
+        _stamina -= 0.2;
+    }else{
+        _vie -= 0.1;
+    }
+    if (_vie <= 0)
+    {
+        _vivant = false;
+    }
 }
