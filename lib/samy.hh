@@ -17,8 +17,11 @@ public:
 	void Attack(SDL_Renderer*& renderer);
 	void reset(SDL_Renderer*& renderer);
 	void ramasse(SDL_Renderer*& renderer);
+	bool getIsfiring(){return Isfiring;}
+	void setIsfiring(bool b){Isfiring=b;}
 private:
 	int id;
+	bool Isfiring=false;
 };
 
 #endif

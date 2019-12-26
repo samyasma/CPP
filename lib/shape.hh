@@ -14,6 +14,9 @@ public:
 	virtual void update(SDL_Event event, SDL_Renderer*& renderer) = 0;
 	double getX(){return _x;}
 	double getY(){return _y;}
+	void setX(double new_x){_x=new_x;}
+	void setY(double new_y){_x=new_y;}
+	void setPosition(double new_x, double new_y){setX(new_x);setY(new_y);}
 protected:
 	double _x;
 	double _y;

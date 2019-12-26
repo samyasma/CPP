@@ -1,7 +1,7 @@
 #include "../lib/game.hh"
 
 //SDL_Texture* player_im; //juste pour le test, à supprimer plus tard
-//SDL_Rect srcR, destR; 
+//SDL_Rect srcR, destR;
 
 SDL_Texture* background_im;
 Terrain* terrain1 = new Terrain("./images/background1.gif");
@@ -83,16 +83,33 @@ void Game::generateSmoke(){
 		timeStart = SDL_GetTicks();
 		Smoke* s = new Smoke(x, 400);
 		s->setPicture(renderer);
-		v.push_back(s);
+		smokeVec.push_back(s);
 	}
 }
 
 void Game::update(){
 	samy->update(); // gestion du saut
-	if (v.size() <= 10)
+	if (smokeVec.size() <= 10)
 	{
 		this->generateSmoke(); // ajouter un smoke mais pas plus de 10
 	}
+	if(samy->getIsfiring()==true){
+		Bullet* b=new Bullet(samy->getX(),samy->getY());
+		bulletVec.push_back(b);
+		samy->setIsfiring(false);
+	}
+	for(auto a:  bulletVec){
+		std:: cout << "peut etre ici 1" << std::endl;
+		a->update(renderer);
+		std:: cout << "peut etre ici 2" << std::endl;
+	}
+
+	for (size_t i = 0; i < smokeVec.size(); i++) {
+		for (auto blt: bulletVec){
+			smokeVec[i]->CheckCollsion(blt);
+		}
+	}
+
 }
 
 // void Game::setText(){ // fonction pour ajouter du texte, ne marche pas
@@ -105,7 +122,7 @@ void Game::update(){
 // 	SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
 
 // 	SDL_Rect Message_rect; //create a rect
-// 	Message_rect.x = 20;  //controls the rect's x coordinate 
+// 	Message_rect.x = 20;  //controls the rect's x coordinate
 // 	Message_rect.y = 405; // controls the rect's y coordinte
 // 	Message_rect.w = 50; // controls the width of the rect
 // 	Message_rect.h = 20; // controls the height of the rect
@@ -165,23 +182,31 @@ void Game::setHealthStamina(){
 
 }
 
+
 void Game::render(){
 	SDL_RenderClear(renderer);
 	// disposition des objets A JOUR, toujours mettre le background au début
 	SDL_RenderCopy(renderer, background_im, NULL, NULL); // placer le background
 	this->setHealthStamina(); // placer les barres de health et stamina
 	//this->setText();
-	for(auto perso : v){
-		SDL_RenderCopy(renderer, perso->getTexture(), NULL, &perso->getdestR()); // copier tout les 'smokes' dans la liste de smokes 
+	for(auto perso : smokeVec){
+		SDL_RenderCopy(renderer, perso->getTexture(), NULL, &perso->getdestR()); // copier tout les 'smokes' dans la liste de smokes
 	}
 	SDL_RenderCopy(renderer, samy->getTexture(), NULL, &samy->getdestR()); // placer Samy
+	for (auto a:  bulletVec){
+		SDL_RenderCopy(renderer, a->getTexture(), NULL, &a->getdestR()); // afficher la bullet
+	}
 	SDL_RenderPresent(renderer); // afficher le render
 }
 
 void Game::clean(){
-	for (auto p : v)
+	for (auto p : smokeVec)
 	{
 		delete p;
+	}
+	for (auto a : bulletVec)
+	{
+		delete a;
 	}
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);

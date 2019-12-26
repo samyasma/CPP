@@ -14,13 +14,15 @@ void Samy::update(SDL_Event event, SDL_Renderer*& renderer){
     {
         case SDLK_LEFT:  _x-=5; break;
         case SDLK_RIGHT: _x+=5; break;
-        case SDLK_UP: 
+        case SDLK_UP:
             if (!_jump)
             {
-                this->jump(); 
+                this->jump();
             }
             break;
-        case SDLK_SPACE: this->Attack(renderer); break;
+        case SDLK_SPACE:
+          this->Attack(renderer);
+          break;
         case SDLK_LSHIFT: this->ramasse(renderer);break;
         //case SDLK_DOWN:  _y+=5; break;
     }
@@ -67,6 +69,8 @@ void Samy::ramasse(SDL_Renderer*& renderer){
 
 void Samy::Attack(SDL_Renderer*& renderer){
     surface = IMG_Load("./images/samy_p.png");
+    std::cout << "marche" << std::endl;
+    Isfiring=true;
     this->setPicture(renderer);
 }
 

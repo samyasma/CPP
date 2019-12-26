@@ -13,9 +13,6 @@ class Personnage: public Shape{
   void Defense();
   virtual ~Personnage();
   virtual void update(SDL_Event event, SDL_Renderer*& renderer) = 0;
-  void Jump();
-  void DoDamage();
-  void TakeDamage();
   void freeS(){SDL_FreeSurface(surface);}
   SDL_Surface* getSurface(){return surface;}
   bool estVivant(){return _vivant;}

@@ -28,11 +28,13 @@ public:
 	bool running(){return isrunning;}
 	void setHealthStamina();
 	void setText();
+	std::vector<Smoke*> getListSmoke(){return smokeVec;}
 private:
 	bool isrunning;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	std::vector<Smoke*> v;
+	std::vector<Smoke*> smokeVec;
+	std::vector<Bullet*> bulletVec;
 	Samy* samy;
 };
 
