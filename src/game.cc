@@ -87,6 +87,7 @@ void Game::generateSmoke(){
 	}
 }
 
+
 void Game::update(){
 	samy->update(); // gestion du saut
 	if (smokeVec.size() <= 10)
@@ -94,32 +95,36 @@ void Game::update(){
 		this->generateSmoke(); // ajouter un smoke mais pas plus de 10
 	}
 	if(samy->getIsfiring()==true && bulletVec.size() <= 10){
-		Bullet* b=new Bullet(samy->getX(),samy->getY());
+		Bullet* b;
+		if(samy->getRight()){
+			b=new Bullet(samy->getX(),samy->getY());
+		}else{
+			b=new Bullet(samy->getX(),samy->getY(), 1);	
+		}
 		b->setTrue();
 		bulletVec.push_back(b);
 		samy->setIsfiring(false);
 	}
 	std::cout << bulletVec.size() << std::endl;
-	int i = 0;
+	//int i = 0;
+	std::vector<Bullet*> bulletVec_temp = {};
 	for(auto a:  bulletVec){
 		//std:: cout << "peut etre ici 1" << std::endl;
 		if(a != nullptr){
 			if (a->getB())
 			{
 				a->update(renderer);
+				bulletVec_temp.push_back(a);
 			}else{
-				std::cout << "hi" << std::endl;
-				bulletVec.erase(bulletVec.begin()+i);
+				//std::cout << "hi" << std::endl;
 				delete a;
 			}
 		}
-		i += 1;
-		//std:: cout << "peut etre ici 2" << std::endl;
 	}
+	bulletVec = bulletVec_temp;
 	for (size_t i = 0; i < smokeVec.size(); i++) {
 		for (auto blt: bulletVec){
 			if(blt != nullptr){
-				//std::cout << "hey" << std::endl;
 				smokeVec[i]->CheckCollsion(blt);
 			}
 		}
@@ -127,29 +132,6 @@ void Game::update(){
 
 }
 
-// void Game::setText(){ // fonction pour ajouter du texte, ne marche pas
-// 	TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24); //this opens a font style and sets a size
-
-// 	SDL_Color Black = {0, 0, 0};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
-
-// 	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "STAMINA", Black); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
-
-// 	SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
-
-// 	SDL_Rect Message_rect; //create a rect
-// 	Message_rect.x = 20;  //controls the rect's x coordinate
-// 	Message_rect.y = 405; // controls the rect's y coordinte
-// 	Message_rect.w = 50; // controls the width of the rect
-// 	Message_rect.h = 20; // controls the height of the rect
-
-// 	//Mind you that (0,0) is on the top left of the window/screen, think a rect as the text's box, that way it would be very simple to understance
-
-// 	//Now since it's a texture, you have to put RenderCopy in your game loop area, the area where the whole code executes
-
-// 	SDL_RenderCopy(renderer, Message, NULL, &Message_rect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
-// 	SDL_FreeSurface(surfaceMessage);
-// 	//SDL_FreeTexture(Message);
-// }
 
 void Game::setHealthStamina(){
 

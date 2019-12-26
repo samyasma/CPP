@@ -5,11 +5,15 @@
 
 void Bullet::update(SDL_Renderer*& renderer){
   	surface=IMG_Load("./images/bullet.png");
-  	_x=_x+7;
-  	if (_x >= 800)
+  	if(this->getRight()){
+  		_x=_x+7;
+  	}else{
+  		_x=_x-7;
+  	}
+  	if (_x >= 800 || _x <= 0)
   	{
   		this->setFalse();
-  	};
+  	}
   	destR.w = 128;
 	destR.h = 128;
 	destR.x = _x;

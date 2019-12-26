@@ -9,6 +9,7 @@ class Bullet: public Shape{
   public :
   Bullet();
   Bullet(double x, double y):Shape(x+40,y-25){surface = IMG_Load("./images/bullet.png");destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;}
+  Bullet(double x, double y, int i):Shape(x-40,y-25){surface = IMG_Load("./images/bullet.png");destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;right = false;}
   ~Bullet(){std::cout << "~BulletGone" << std::endl;}
   void update(SDL_Event event, SDL_Renderer*& renderer){}
   void update(SDL_Renderer*& renderer);
@@ -22,8 +23,10 @@ class Bullet: public Shape{
   void setFalse(){is_on_map = false;}
   double getX(){return _x;}
   bool getB(){return is_on_map;}
+  bool getRight(){return right;}
 protected:
   //int _damage;
+  bool right = true;
   bool is_on_map = false;
   SDL_Rect destR;
   SDL_Surface* surface;

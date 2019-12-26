@@ -19,9 +19,13 @@ public:
 	void ramasse(SDL_Renderer*& renderer);
 	bool getIsfiring(){return Isfiring;}
 	void setIsfiring(bool b){Isfiring=b;}
+	void setLeft(){right = false;}
+	void setRight(){right = true;}
+	bool getRight(){return right;}
 private:
 	int id;
 	bool Isfiring=false;
+	bool right = true;
 };
 
 #endif
