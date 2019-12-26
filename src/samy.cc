@@ -58,10 +58,6 @@ void Samy::update(){
     destR.y = _y;
 }
 
-void Samy::decrease(){
-    _stamina -= 0.05;
-}
-
 void Samy::ramasse(SDL_Renderer*& renderer){
     surface = IMG_Load("./images/samy_f.png");
     this->setPicture(renderer);

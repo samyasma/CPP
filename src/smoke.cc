@@ -21,11 +21,33 @@ void Smoke::update(){
 		destR.h = 128;
 		destR.x = _x;
 		destR.y = _y;
-		//_stamina -= 0.0005;
-		//_vivant= true;
 	}else{
 		_vivant = false;
 	}
+}
+
+void Smoke::Attack(SDL_Renderer*& renderer){
+	if(this->getRight()){
+        surface = IMG_Load("./images/smoke_f.png");
+    }else{
+        surface = IMG_Load("./images/smoke_fr.png");
+    }
+    this->setPicture(renderer);
+}
+
+void Smoke::update(Samy*& samy, SDL_Renderer*& renderer){
+	if (abs(samy->getX()-this->getX()) < 20)
+	{
+		this->Attack(renderer);
+		samy->decrease();
+	}else{
+		this->reset(renderer);
+	}
+}
+
+void Smoke::reset(SDL_Renderer*& renderer){
+    surface = IMG_Load("./images/smoke.png");
+    this->setPicture(renderer);
 }
 
 void Smoke::CheckCollsion(Bullet* b) {

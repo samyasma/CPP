@@ -135,6 +135,7 @@ void Game::update(){
 		smokeVec[i]->update();
 		if(smokeVec[i]->estVivant()){
 			smokeVec_alive.push_back(smokeVec[i]);
+			smokeVec[i]->update(samy, renderer);
 		}else{
 			delete smokeVec[i];
 		}

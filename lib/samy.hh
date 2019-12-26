@@ -13,7 +13,7 @@ public:
 	Samy(double x, double y):Personnage(x,y,100,100, "./images/samy.png"){id += 1;}
 	void update(SDL_Event event, SDL_Renderer*& renderer);
 	void update();
-	void decrease();
+	void decrease(){_vie -= 20;}
 	void Attack(SDL_Renderer*& renderer);
 	void reset(SDL_Renderer*& renderer);
 	void ramasse(SDL_Renderer*& renderer);
