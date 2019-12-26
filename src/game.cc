@@ -7,7 +7,7 @@ Uint32 timeStart = SDL_GetTicks();
 
 int killed = 0;
 
-const int difficulty = 500;
+//const int difficulty = 500;
 
 Game::Game(){
 
@@ -19,9 +19,14 @@ Game::~Game(){
 
 
 
-void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen){
+void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int difficulty){
 	int flags = 0;
-
+	if (difficulty == 2)
+	{
+		_difficulty = 500;
+	}else{
+		_difficulty = 3000;
+	}
 	if (fullscreen)
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
@@ -82,7 +87,7 @@ void Game::generateSmoke(){
 	while( x > 200 && x < 600){
 		x = rand()%800 +1;
 	}
-	if(SDL_GetTicks() - timeStart> difficulty){ // générer un Smoke toutes les 5 secondes
+	if(SDL_GetTicks() - timeStart> _difficulty){ // générer un Smoke toutes les 5 secondes
 		timeStart = SDL_GetTicks();
 		Smoke* s = new Smoke(x, 400);
 		s->setPicture(renderer);
@@ -233,6 +238,11 @@ void Game::clean(){
 	{
 		delete a;
 	}
+	for (auto w : WeaponVec)
+	{
+		delete w;
+	}
+	delete samy;
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
