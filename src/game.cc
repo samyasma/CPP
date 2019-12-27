@@ -20,6 +20,7 @@ Game::~Game(){
 
 
 void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int difficulty){
+	//TTF_Init();
 	int flags = 0;
 	if (difficulty == 2)
 	{
@@ -107,6 +108,16 @@ void Game::weaponupdate(Samy* samy){
 	}
 }
 
+void Game::setScore(){
+	// SDL_Surface* text = TTF_RenderText_Solid(font,std::to_string(killed).c_str(), color);
+	// SDL_Texture * texture_text = SDL_CreateTextureFromSurface(renderer, text);
+	// int texW = 0;
+	// int texH = 0;
+	// SDL_QueryTexture(texture_text, NULL, NULL, &texW, &texH);
+	// SDL_Rect dstrect = { 0, 0, texW, texH };
+	// SDL_RenderCopy(renderer, texture_text, NULL, &dstrect);
+}
+
 
 void Game::update(){
 	samy->update(); // gestion du saut
@@ -165,6 +176,11 @@ void Game::update(){
 		{
 			Bazooka* bazooka = new Bazooka(rand()%800 +1, 400);
 			WeaponVec.push_back(bazooka);
+			cpt_weapon += 1;
+		}else if (killed > 35 && WeaponVec.size() == 0 && cpt_weapon == 1)
+		{
+			DragonBall* d = new DragonBall(rand()%800 +1, 400);
+			WeaponVec.push_back(d);
 			cpt_weapon += 1;
 		}
 		this->weaponupdate(samy);
@@ -237,6 +253,7 @@ void Game::render(){
 	for (auto w:  WeaponVec){
 		SDL_RenderCopy(renderer, w->getTexture(), NULL, &w->getdestR()); // afficher la bullet
 	}
+	//this->setScore();
 	SDL_RenderPresent(renderer); // afficher le render
 }
 
@@ -256,6 +273,8 @@ void Game::clean(){
 	delete samy;
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
+	//TTF_CloseFont(font);
+	//TTF_Quit();
 	SDL_Quit();
 	std::cout << "fin " << killed << std::endl;
 }

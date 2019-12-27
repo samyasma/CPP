@@ -5,6 +5,7 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include <iostream>
+#include <string>
 #include <stdio.h>
 #include <vector>
 #include <stdlib.h>
@@ -14,6 +15,7 @@
 #include "../lib/smoke.hh"
 #include "../lib/samy.hh"
 #include "../lib/bazooka.hh"
+#include "../lib/dragonball.hh"
 
 class Game{
 public:
@@ -30,6 +32,7 @@ public:
 	void setText();
 	void weaponupdate(Samy* samy);
 	std::vector<Smoke*> getListSmoke(){return smokeVec;}
+	void setScore();
 private:
 	unsigned int _difficulty;
 	bool isrunning;
@@ -40,6 +43,8 @@ private:
 	std::vector<Weapon*> WeaponVec = {};
 	Samy* samy;
 	int cpt_weapon = 0;
+	//TTF_Font * font = TTF_OpenFont("arial.ttf", 25);
+	//SDL_Color color = { 255, 255, 255 };
 };
 
 #endif

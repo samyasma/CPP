@@ -4,7 +4,11 @@
 
 
 void Bullet::update(SDL_Renderer*& renderer){
-	if (id_bullet == 1)
+	if (id_bullet == 2)
+	{
+		surface=IMG_Load("./images/bullet3.png");
+	}
+	else if (id_bullet == 1)
 	{
 		surface=IMG_Load("./images/bullet2.png");
 	}

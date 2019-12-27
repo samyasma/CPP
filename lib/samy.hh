@@ -23,7 +23,7 @@ public:
 	void setWeapon(int i);
 	unsigned int getIdWeapon(){return id_weapon;}
 private:
-	unsigned int id_weapon = 0; // 0 : arme par défaut , 1 : bazooka
+	unsigned int id_weapon = 0; // 0 : arme par défaut , 1 : bazooka , 2 : sayen
 	bool Isfiring=false;
 };
 

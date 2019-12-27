@@ -72,7 +72,15 @@ void Samy::ramasse(SDL_Renderer*& renderer){
 }
 
 void Samy::Attack(SDL_Renderer*& renderer){
-	if (id_weapon == 1)
+	if (id_weapon == 2)
+	{
+		if(this->getRight()){
+	        surface = IMG_Load("./images/samy_sayen_ar.png");
+	    }else{
+	        surface = IMG_Load("./images/samy_sayen_a.png");
+	    }
+	}
+	else if (id_weapon == 1)
 	{
 		if(this->getRight()){
 	        surface = IMG_Load("./images/samy_bazooka.png");
@@ -92,12 +100,23 @@ void Samy::Attack(SDL_Renderer*& renderer){
 }
 
 void Samy::reset(SDL_Renderer*& renderer){
-    if (this->getRight())
-    {
-        surface = IMG_Load("./images/samy.png");
-    }else{
-        surface = IMG_Load("./images/samyr.png");
-    }
+	if (id_weapon == 2)
+	{
+		if (this->getRight())
+	    {
+	        surface = IMG_Load("./images/samy_sayen.png");
+	    }else{
+	        surface = IMG_Load("./images/samy_sayenr.png");
+	    }
+	}
+	else{
+	    if (this->getRight())
+	    {
+	        surface = IMG_Load("./images/samy.png");
+	    }else{
+	        surface = IMG_Load("./images/samyr.png");
+	    }
+	}
     this->setPicture(renderer);
 }
 
