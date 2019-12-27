@@ -17,8 +17,10 @@ public:
 	void update();
 	void update(Samy*& samy, SDL_Renderer*& renderer);
 	void reset(SDL_Renderer*& renderer);
+	void recoit(SDL_Renderer*& renderer);
 private:
 	int id;
+	bool a_recu = false;
 };
 
 #endif

@@ -49,13 +49,23 @@ void Smoke::update(Samy*& samy, SDL_Renderer*& renderer){
 		// else if(!this->getRight() && _x <= 50){
 		// 	this->setRight();
 		// }
-		this->reset(renderer);
+		if(!a_recu){
+			this->reset(renderer);
+		}else{
+			this->recoit(renderer);
+			a_recu = false;
+		}
 	}
 	
 }
 
 void Smoke::reset(SDL_Renderer*& renderer){
     surface = IMG_Load("./images/smoke.png");
+    this->setPicture(renderer);
+}
+
+void Smoke::recoit(SDL_Renderer*& renderer){
+	surface = IMG_Load("./images/smoke_d.png");
     this->setPicture(renderer);
 }
 
@@ -68,7 +78,8 @@ void Smoke::CheckCollsion(Bullet* b) {
 						destR.x = _x;
 						destR.y = _y;
 						b->setFalse();
-						this->_vie -= 20;
+						this->_vie -= 20 + 15*b->getId();
+						a_recu = true;
 					}
 					//_vivant=false;
 			}

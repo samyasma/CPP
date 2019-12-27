@@ -72,11 +72,20 @@ void Samy::ramasse(SDL_Renderer*& renderer){
 }
 
 void Samy::Attack(SDL_Renderer*& renderer){
-    if(this->getRight()){
-        surface = IMG_Load("./images/samy_p.png");
-    }else{
-        surface = IMG_Load("./images/samy_pr.png");
-    }
+	if (id_weapon == 1)
+	{
+		if(this->getRight()){
+	        surface = IMG_Load("./images/samy_bazooka.png");
+	    }else{
+	        surface = IMG_Load("./images/samy_bazookar.png");
+	    }
+	}else{
+	    if(this->getRight()){
+	        surface = IMG_Load("./images/samy_p.png");
+	    }else{
+	        surface = IMG_Load("./images/samy_pr.png");
+	    }
+	}
     //std::cout << "marche" << std::endl;
     Isfiring=true;
     this->setPicture(renderer);
@@ -90,6 +99,10 @@ void Samy::reset(SDL_Renderer*& renderer){
         surface = IMG_Load("./images/samyr.png");
     }
     this->setPicture(renderer);
+}
+
+void Samy::setWeapon(int i){
+	id_weapon = i;
 }
 
 void Samy::decrease(){   

@@ -8,8 +8,8 @@
 class Bullet: public Shape{
   public :
   Bullet();
-  Bullet(double x, double y):Shape(x+40,y-25){destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;}
-  Bullet(double x, double y, int i):Shape(x-40,y-25){destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;right = false;}
+  Bullet(double x, double y, int j):Shape(x+40,y-25){destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;id_bullet = j;}
+  Bullet(double x, double y, int j, int i):Shape(x-40,y-25){destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;right = false;id_bullet = j;}
   ~Bullet(){std::cout << "~BulletGone" << std::endl;}
   void update(SDL_Event event, SDL_Renderer*& renderer){}
   void update(SDL_Renderer*& renderer);
@@ -24,8 +24,10 @@ class Bullet: public Shape{
   double getX(){return _x;}
   bool getB(){return is_on_map;}
   bool getRight(){return right;}
+  int getId(){return id_bullet;}
 protected:
   //int _damage;
+  int id_bullet = 0; // 0 : par défaut, 1 : bazooka
   bool right = true;
   bool is_on_map = false;
   SDL_Rect destR;

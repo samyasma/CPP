@@ -4,7 +4,13 @@
 
 
 void Bullet::update(SDL_Renderer*& renderer){
-  	surface=IMG_Load("./images/bullet.png");
+	if (id_bullet == 1)
+	{
+		surface=IMG_Load("./images/bullet2.png");
+	}
+	else{
+  		surface=IMG_Load("./images/bullet.png");
+	}
   	if(this->getRight()){
   		_x=_x+7;
   	}else{

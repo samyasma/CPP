@@ -87,7 +87,7 @@ void Game::generateSmoke(){
 	while( x > 200 && x < 600){
 		x = rand()%800 +1;
 	}
-	if(SDL_GetTicks() - timeStart> _difficulty){ // générer un Smoke toutes les 5 secondes
+	if(SDL_GetTicks() - timeStart > _difficulty){ // générer un Smoke toutes les 5 secondes
 		timeStart = SDL_GetTicks();
 		Smoke* s = new Smoke(x, 400);
 		s->setPicture(renderer);
@@ -95,71 +95,82 @@ void Game::generateSmoke(){
 	}
 }
 
-void Game::weaponupdate(){
+void Game::weaponupdate(Samy* samy){
 	for (auto a : WeaponVec)
 	{
 		a->update(this->renderer);
+		if (a->update(samy))
+		{
+			delete a;
+			WeaponVec = {};
+		}
 	}
 }
 
 
 void Game::update(){
 	samy->update(); // gestion du saut
-	if (smokeVec.size() <= 10)
-	{
-		this->generateSmoke(); // ajouter un smoke mais pas plus de 10
-	}
-	if(samy->getIsfiring()==true && bulletVec.size() <= 10){
-		Bullet* b;
-		if(samy->getRight()){
-			b=new Bullet(samy->getX(),samy->getY());
-		}else{
-			b=new Bullet(samy->getX(),samy->getY(), 1);	
+	unsigned int id_balle = samy->getIdWeapon();
+	if(samy->estVivant()){
+		if (smokeVec.size() <= 10)
+		{
+			this->generateSmoke(); // ajouter un smoke mais pas plus de 10
 		}
-		b->setTrue();
-		bulletVec.push_back(b);
-		samy->setIsfiring(false);
-	}
-	std::cout << bulletVec.size() << std::endl;
-	//int i = 0;
-	std::vector<Bullet*> bulletVec_temp = {};
-	for(auto a:  bulletVec){
-		//std:: cout << "peut etre ici 1" << std::endl;
-		if(a != nullptr){
-			if (a->getB())
-			{
-				a->update(renderer);
-				bulletVec_temp.push_back(a);
+		if(samy->getIsfiring()==true && bulletVec.size() <= 10 + 5*id_balle){
+			Bullet* b;
+			if(samy->getRight()){
+				b=new Bullet(samy->getX(),samy->getY(), id_balle);
 			}else{
-				//std::cout << "hi" << std::endl;
-				delete a;
+				b=new Bullet(samy->getX(),samy->getY(),id_balle, 1);	
+			}
+			b->setTrue();
+			bulletVec.push_back(b);
+			samy->setIsfiring(false);
+		}
+		//std::cout << bulletVec.size() << std::endl;
+		//int i = 0;
+		std::vector<Bullet*> bulletVec_temp = {};
+		for(auto a:  bulletVec){
+			//std:: cout << "peut etre ici 1" << std::endl;
+			if(a != nullptr){
+				if (a->getB())
+				{
+					a->update(renderer);
+					bulletVec_temp.push_back(a);
+				}else{
+					//std::cout << "hi" << std::endl;
+					delete a;
+				}
 			}
 		}
-	}
-	bulletVec = bulletVec_temp;
-	std::vector<Smoke*> smokeVec_alive = {};
-	for (size_t i = 0; i < smokeVec.size(); i++) {
-		for (auto blt: bulletVec){
-			if(blt != nullptr){
-				smokeVec[i]->CheckCollsion(blt);
+		bulletVec = bulletVec_temp;
+		std::vector<Smoke*> smokeVec_alive = {};
+		for (size_t i = 0; i < smokeVec.size(); i++) {
+			for (auto blt: bulletVec){
+				if(blt != nullptr){
+					smokeVec[i]->CheckCollsion(blt);
+				}
+			}
+			smokeVec[i]->update();
+			if(smokeVec[i]->estVivant()){
+				smokeVec_alive.push_back(smokeVec[i]);
+				smokeVec[i]->update(samy, renderer);
+			}else{
+				delete smokeVec[i];
+				killed += 1;
 			}
 		}
-		smokeVec[i]->update();
-		if(smokeVec[i]->estVivant()){
-			smokeVec_alive.push_back(smokeVec[i]);
-			smokeVec[i]->update(samy, renderer);
-		}else{
-			delete smokeVec[i];
-			killed += 1;
+		smokeVec = smokeVec_alive;
+		if (killed > 10 && WeaponVec.size() == 0 && cpt_weapon == 0)
+		{
+			Bazooka* bazooka = new Bazooka(rand()%800 +1, 400);
+			WeaponVec.push_back(bazooka);
+			cpt_weapon += 1;
 		}
+		this->weaponupdate(samy);
+	}else{
+		isrunning = false;
 	}
-	smokeVec = smokeVec_alive;
-	if (killed > 10 && WeaponVec.size() == 0)
-	{
-		Bazooka* bazooka = new Bazooka(rand()%800 +1, 400);
-		WeaponVec.push_back(bazooka);
-	}
-	this->weaponupdate();
 }
 
 

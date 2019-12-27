@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "shape.hh"
+#include "samy.hh"
 
 class Weapon: public Shape{
   public :
@@ -12,6 +13,7 @@ class Weapon: public Shape{
   ~Weapon(){std::cout << "~WeaponGone" << std::endl;}
   virtual void update(SDL_Event event, SDL_Renderer*& renderer) = 0;
   virtual void update(SDL_Renderer*& renderer) = 0;
+  virtual bool update(Samy*& samy) = 0;
   void freeS(){SDL_FreeSurface(surface);}
   SDL_Surface* getSurface(){return surface;}
   void setPicture(SDL_Renderer*& renderer){weapon_im = SDL_CreateTextureFromSurface(renderer, surface);SDL_FreeSurface(surface);}

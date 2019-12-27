@@ -28,7 +28,7 @@ public:
 	bool running(){return isrunning;}
 	void setHealthStamina();
 	void setText();
-	void weaponupdate();
+	void weaponupdate(Samy* samy);
 	std::vector<Smoke*> getListSmoke(){return smokeVec;}
 private:
 	unsigned int _difficulty;
@@ -39,6 +39,7 @@ private:
 	std::vector<Bullet*> bulletVec;
 	std::vector<Weapon*> WeaponVec = {};
 	Samy* samy;
+	int cpt_weapon = 0;
 };
 
 #endif

@@ -25,3 +25,13 @@ void Bazooka::update(SDL_Renderer*& renderer){
 	destR.y = _y;
   this->setPicture(renderer);
 }
+
+bool Bazooka::update(Samy*& samy){
+	if (abs(samy->getX()-_x) <= 20 && abs(samy->getY()-_y) <= 20)
+	{
+		samy->setWeapon(id);
+		return true;
+	}else{
+		return false;
+	}
+}

@@ -49,6 +49,7 @@ int main(int argc, char const *argv[])
 		menu->render();
 		if(i == 2 or i == 1){
 			run(i, frameDelay);
+			break;
 		}
 	}
 	menu->clean();
