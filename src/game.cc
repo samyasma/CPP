@@ -7,6 +7,8 @@ Uint32 timeStart = SDL_GetTicks();
 
 int killed = 0;
 
+const int LEVEL_HEIGHT = 400;
+const int LEVEL_WIDTH = 1000;
 //const int difficulty = 500;
 
 Game::Game(){
@@ -56,7 +58,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 
 	background_im = SDL_CreateTextureFromSurface(renderer, terrain1->getSurface());
-	Samy* player_samy = new Samy(300, 400);
+	Samy* player_samy = new Samy(450, LEVEL_HEIGHT);
 	player_samy->setPicture(renderer);
 	//v.push_back(player_samy); // on ajoute Samy à la liste des personnages existants dans le jeu
 	samy = player_samy;
@@ -86,12 +88,12 @@ void Game::handleEvents(){
 
 void Game::generateSmoke(){
 	double x = rand()%800 +1;
-	while( x > 200 && x < 600){
-		x = rand()%800 +1;
+	while( x > 200 && x < LEVEL_WIDTH-200){
+		x = rand()%LEVEL_WIDTH +1;
 	}
 	if(SDL_GetTicks() - timeStart > _difficulty){ // générer un Smoke toutes les 5 secondes
 		timeStart = SDL_GetTicks();
-		Smoke* s = new Smoke(x, 400);
+		Smoke* s = new Smoke(x, LEVEL_HEIGHT);
 		s->setPicture(renderer);
 		smokeVec.push_back(s);
 	}
@@ -175,12 +177,12 @@ void Game::update(){
 		smokeVec = smokeVec_alive;
 		if (killed > 10 && WeaponVec.size() == 0 && cpt_weapon == 0)
 		{
-			Bazooka* bazooka = new Bazooka(rand()%800 +1, 400);
+			Bazooka* bazooka = new Bazooka(rand()%800 +1, LEVEL_HEIGHT);
 			WeaponVec.push_back(bazooka);
 			cpt_weapon += 1;
 		}else if (killed > 35 && WeaponVec.size() == 0 && cpt_weapon == 1)
 		{
-			DragonBall* d = new DragonBall(rand()%800 +1, 400);
+			DragonBall* d = new DragonBall(rand()%800 +1, LEVEL_HEIGHT);
 			WeaponVec.push_back(d);
 			cpt_weapon += 1;
 		}
@@ -198,7 +200,7 @@ void Game::setHealthStamina(){
 	SDL_Rect r;
     r.x = 15;
     r.y = 15;
-    r.w = 200;
+    r.w = 400;
     r.h = 20;
     SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
     SDL_RenderFillRect(renderer, &r);
@@ -218,7 +220,7 @@ void Game::setHealthStamina(){
 
     r.x = 15;
     r.y = 40;
-    r.w = 200;
+    r.w = 400;
     r.h = 20;
     SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
     SDL_RenderFillRect(renderer, &r);

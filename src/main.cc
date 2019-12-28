@@ -9,7 +9,7 @@ Menu* menu = nullptr;
 
 void run(int i, const int frameDelay){
 	game = new Game();
-	game->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600, false, i);
+	game->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,1000,600, false, i);
 	Uint32 frameStart; // gestion des frames
 	int frameTime;
 
@@ -52,6 +52,8 @@ int main(int argc, char const *argv[])
 			run(i, frameDelay);
 			break;
 		}
+		//std::cout << "hey" <<std::endl;
+		//menu->render();
 	}
 	menu->clean();
 	delete menu;

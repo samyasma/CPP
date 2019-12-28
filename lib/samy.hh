@@ -9,8 +9,8 @@ class Samy : public Personnage{
 public:
 	//Smoke();
 	~Samy(){std::cout << "~Sa" << std::endl;}
-	Samy():Personnage(300,400,100,100, "./images/samy.png"){}
-	Samy(double x, double y):Personnage(x,y,100,100, "./images/samy.png"){}
+	Samy():Personnage(300,400,200,200, "./images/samy.png"){}
+	Samy(double x, double y):Personnage(x,y,200,200, "./images/samy.png"){}
 	void update(SDL_Event event, SDL_Renderer*& renderer);
 	void update();
 	void decrease();
