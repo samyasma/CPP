@@ -18,8 +18,10 @@ public:
 	void update(Samy*& samy, SDL_Renderer*& renderer);
 	void reset(SDL_Renderer*& renderer);
 	void recoit(SDL_Renderer*& renderer);
+	void walk(SDL_Renderer*& renderer);
 private:
 	int id;
+	int id_walk = 2;
 	bool a_recu = false;
 };
 

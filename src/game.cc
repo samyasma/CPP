@@ -75,6 +75,7 @@ void Game::handleEvents(){
 	switch(event.type){
 		case SDL_QUIT:
 			isrunning = false;
+			//std::cout <<"quit"<<std::endl;
 			break;
 		case SDL_KEYDOWN:
 			samy->update(event, renderer);

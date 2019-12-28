@@ -32,6 +32,7 @@ void run(int i, const int frameDelay){
 	}
 	game->clean();
 	delete game;
+	std::cout << "fin game" << std::endl;
 }
 
 int main(int argc, char const *argv[])
