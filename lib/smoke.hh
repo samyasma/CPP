@@ -5,6 +5,8 @@
 #include "../lib/personnage.hh"
 #include "../lib/bullet.hh"
 #include "../lib/samy.hh"
+
+
 class Smoke : public Personnage{
 public:
 	//Smoke();
@@ -21,7 +23,7 @@ public:
 	void walk(SDL_Renderer*& renderer);
 private:
 	int id;
-	int id_walk = 2;
+	double id_walk = 2.0;
 	bool a_recu = false;
 };
 

@@ -30,12 +30,12 @@ void Smoke::update(Samy*& samy, SDL_Renderer*& renderer){
 		{
 			_x += 3;
 			//rand()%3+1;
-			id_walk += 1;
+			id_walk = double(id_walk+0.125);
 			this->setRight();
 		}else if(samy->getX() < this->getX()){
 			_x -= 3;
 			//rand()%3+1;
-			id_walk += 1;
+			id_walk = double(id_walk+0.125);
 			this->setLeft();
 		}
 		// if (this->getRight())
@@ -67,10 +67,11 @@ void Smoke::update(Samy*& samy, SDL_Renderer*& renderer){
 void Smoke::walk(SDL_Renderer*& renderer){
 	if (right)
 	{
+		//std::cout << id_walk << std::endl;
 		if(id_walk > 9){
 			id_walk = 2;
 		}
-		std::string txt = "./images/smoke" + std::to_string(id_walk)+".png";
+		std::string txt = "./images/smoke" + std::to_string(int(floor(id_walk)))+".png";
 		//std::string txt2 = ".png"
 		const char *c = txt.c_str();
 		surface = IMG_Load(c);
@@ -78,7 +79,7 @@ void Smoke::walk(SDL_Renderer*& renderer){
 		if(id_walk > 9){
 			id_walk = 2;
 		}
-		std::string txt = "./images/smoke" + std::to_string(id_walk)+"r.png";
+		std::string txt = "./images/smoke" + std::to_string(int(floor(id_walk)))+"r.png";
 		//std::string txt2 = ".png"
 		const char *c = txt.c_str();
 		surface = IMG_Load(c);
