@@ -62,6 +62,9 @@ int Menu::handleEvents(){
 			else if(x >= 100 && x <= 300 && y <=410 && y >= 360){
 				i = 1;
 			}
+			else if(x >= 310 && x <= 540 && y <=330 && y >= 280){
+				i=3;
+			}
 	}
 	return i;
 }

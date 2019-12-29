@@ -1,5 +1,5 @@
 #include "../lib/game.hh"
-
+#include <SDL2/SDL_ttf.h>
 SDL_Texture* background_im;
 Terrain* terrain1 = new Terrain("./images/background1.gif");
 
@@ -21,10 +21,11 @@ Game::~Game(){
 
 
 
-void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int difficulty){
+void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int mode){
 	//TTF_Init();
+	_mode=mode;
 	int flags = 0;
-	if (difficulty == 2)
+	if (_mode == 2)
 	{
 		_difficulty = 500;
 	}else{
@@ -58,31 +59,58 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 
 	background_im = SDL_CreateTextureFromSurface(renderer, terrain1->getSurface());
-	Samy* player_samy = new Samy(450, LEVEL_HEIGHT);
-	player_samy->setPicture(renderer);
-	//v.push_back(player_samy); // on ajoute Samy à la liste des personnages existants dans le jeu
-	samy = player_samy;
-	//player_im = SDL_CreateTextureFromSurface(renderer, player_samy->getSurface());
-	//SDL_Surface* tmpsurface = IMG_Load("./images/samy.png");
-	//player = SDL_CreateTextureFromSurface(renderer, tmpsurface);
-	//SDL_FreeSurface(tmpsurface);
-	//player_samy->freeS();
-
+	if (_mode==3) {
+		samy = new Samy(450, LEVEL_HEIGHT,1);
+		samy->setPicture(renderer);
+		younes = new Samy(450+50, LEVEL_HEIGHT,2);
+		younes->setPicture(renderer);
+		Players.push_back(younes);
+		Players.push_back(samy);
+	}
+	else{
+		Samy* player_samy = new Samy(450, LEVEL_HEIGHT,1);
+		player_samy->setPicture(renderer);
+		//v.push_back(player_samy); // on ajoute Samy à la liste des personnages existants dans le jeu
+		samy = player_samy;
+		//player_im = SDL_CreateTextureFromSurface(renderer, player_samy->getSurface());
+		//SDL_Surface* tmpsurface = IMG_Load("./images/samy.png");
+		//player = SDL_CreateTexture4FromSurface(renderer, tmpsurface);
+		//SDL_FreeSurface(tmpsurface);
+		//player_samy->freeS();
+	}
 	// Fin de la création
 }
 
 void Game::handleEvents(){
 	SDL_Event event;
 	SDL_PollEvent(&event);
-	switch(event.type){
-		case SDL_QUIT:
-			isrunning = false;
-			//std::cout <<"quit"<<std::endl;
-			break;
-		case SDL_KEYDOWN:
-			samy->update(event, renderer);
-		case SDL_KEYUP:
-			samy->update(event, renderer);
+	if (_mode==3) {
+		switch(event.type){
+			case SDL_QUIT:
+				isrunning = false;
+				//std::cout <<"quit"<<std::endl;
+				break;
+			case SDL_KEYDOWN:
+				for (auto a: Players) {
+					a->update(event, renderer);
+				}
+			case SDL_KEYUP:
+			for (auto a: Players) {
+				a->update(event, renderer);
+			}
+			}
+		}
+	else{
+		switch(event.type){
+			case SDL_QUIT:
+				isrunning = false;
+				//std::cout <<"quit"<<std::endl;
+				break;
+			case SDL_KEYDOWN:
+				samy->update(event, renderer);
+			case SDL_KEYUP:
+				samy->update(event, renderer);
+		}
 	}
 }
 
@@ -112,17 +140,123 @@ void Game::weaponupdate(Samy* samy){
 }
 
 void Game::setScore(){
-	// SDL_Surface* text = TTF_RenderText_Solid(font,std::to_string(killed).c_str(), color);
-	// SDL_Texture * texture_text = SDL_CreateTextureFromSurface(renderer, text);
-	// int texW = 0;
-	// int texH = 0;
-	// SDL_QueryTexture(texture_text, NULL, NULL, &texW, &texH);
-	// SDL_Rect dstrect = { 0, 0, texW, texH };
-	// SDL_RenderCopy(renderer, texture_text, NULL, &dstrect);
+	 /*TTF_Font *font;
+	 font=TTF_OpenFont("angelina.ttf", 16);
+	 SDL_Color color={230,230,230};
+	 SDL_Surface* text = TTF_RenderText_Solid(font,std::to_string(killed).c_str(), color);
+	 SDL_Texture * texture_text = SDL_CreateTextureFromSurface(renderer, text);
+	 int texW = 100;
+	 int texH = 250;
+	 SDL_QueryTexture(texture_text, NULL, NULL, &texW, &texH);
+	 SDL_Rect dstrect = { 159, 450, texW, texH };
+	 SDL_RenderCopy(renderer, texture_text, NULL, &dstrect);
+
+
+	  SDL_Surface *texte = NULL;*/
+
+TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24); //this opens a font style and sets a size
+SDL_Color White = {0,0,0};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
+SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, std::to_string(killed).c_str(), White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
+SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
+
+SDL_Rect Message_rect; //create a rect
+Message_rect.x = 46;  //controls the rect's x coordinate
+Message_rect.y = 535; // controls the rect's y coordinte
+Message_rect.w = 100; // controls the width of the rect
+Message_rect.h = 100; // controls the height of the rect
+
+
+SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
 }
 
 
 void Game::update(){
+	if(_mode==3 and Players.size()>1){
+		for (auto a: Players) {
+			a->update();
+		}
+		bool continuer=false;
+		std::cout << "ca marche" << std::endl;
+		for (auto a: Players) {
+			if (a->estVivant()) {
+				continuer=true;
+			}
+		}
+		if(continuer){
+			if (smokeVec.size() <= 10)
+			{
+				this->generateSmoke(); // ajouter un smoke mais pas plus de 10
+			}
+			for (auto a: Players) {
+
+				if(a->getIsfiring()==true && bulletVec.size() <= 10 + 5*a->getIdWeapon()){
+					Bullet* b;
+					if(a->getRight()){
+						b=new Bullet(a->getX(),a->getY(), a->getIdWeapon());
+					}else{
+						b=new Bullet(a->getX(),a->getY(),a->getIdWeapon(), 1);
+					}
+					b->setTrue();
+					bulletVec.push_back(b);
+					a->setIsfiring(false);
+				}
+		}
+			//std::cout << bulletVec.size() << std::endl;
+			//int i = 0;
+			std::cout << "ca marche3" << std::endl;
+			std::vector<Bullet*> bulletVec_temp = {};
+			for(auto a:  bulletVec){
+				//std:: cout << "peut etre ici 1" << std::endl;
+				if(a != nullptr){
+					if (a->getB())
+					{
+						a->update(renderer);
+						bulletVec_temp.push_back(a);
+					}else{
+						//std::cout << "hi" << std::endl;
+						delete a;
+					}
+				}
+			}
+			bulletVec = bulletVec_temp;
+			std::vector<Smoke*> smokeVec_alive = {};
+			for (size_t i = 0; i < smokeVec.size(); i++) {
+				for (auto blt: bulletVec){
+					if(blt != nullptr){
+						smokeVec[i]->CheckCollsion(blt);
+					}
+				}
+				smokeVec[i]->update();
+				if(smokeVec[i]->estVivant()){
+					smokeVec_alive.push_back(smokeVec[i]);
+					smokeVec[i]->update(samy,younes,renderer);
+				}else{
+					delete smokeVec[i];
+					killed += 1;
+				}
+			}
+			smokeVec = smokeVec_alive;
+			if (killed > 10 && WeaponVec.size() == 0 && cpt_weapon == 0)
+			{
+				Bazooka* bazooka = new Bazooka(rand()%800 +1, LEVEL_HEIGHT);
+				WeaponVec.push_back(bazooka);
+				cpt_weapon += 1;
+			}else if (killed > 35 && WeaponVec.size() == 0 && cpt_weapon == 1)
+			{
+				DragonBall* d = new DragonBall(rand()%800 +1, LEVEL_HEIGHT);
+				WeaponVec.push_back(d);
+				cpt_weapon += 1;
+			}
+			for (auto a: Players) {
+				this->weaponupdate(a);
+			}
+	}
+			else {
+			isrunning = false;
+		}
+}
+
+	else{
 	samy->update(); // gestion du saut
 	unsigned int id_balle = samy->getIdWeapon();
 	if(samy->estVivant()){
@@ -135,7 +269,7 @@ void Game::update(){
 			if(samy->getRight()){
 				b=new Bullet(samy->getX(),samy->getY(), id_balle);
 			}else{
-				b=new Bullet(samy->getX(),samy->getY(),id_balle, 1);	
+				b=new Bullet(samy->getX(),samy->getY(),id_balle, 1);
 			}
 			b->setTrue();
 			bulletVec.push_back(b);
@@ -191,6 +325,7 @@ void Game::update(){
 		isrunning = false;
 	}
 }
+}
 
 
 void Game::setHealthStamina(){
@@ -245,11 +380,18 @@ void Game::render(){
 	// disposition des objets A JOUR, toujours mettre le background au début
 	SDL_RenderCopy(renderer, background_im, NULL, NULL); // placer le background
 	this->setHealthStamina(); // placer les barres de health et stamina
+	this->setScore();
 	//this->setText();
 	for(auto perso : smokeVec){
 		SDL_RenderCopy(renderer, perso->getTexture(), NULL, &perso->getdestR()); // copier tout les 'smokes' dans la liste de smokes
 	}
+	if(_mode==3){
 	SDL_RenderCopy(renderer, samy->getTexture(), NULL, &samy->getdestR()); // placer Samy
+	SDL_RenderCopy(renderer, younes->getTexture(), NULL, &younes->getdestR()); // placer Younes
+	}
+	else{
+		SDL_RenderCopy(renderer, samy->getTexture(), NULL, &samy->getdestR()); // placer Samy
+	}
 	for (auto a:  bulletVec){
 		SDL_RenderCopy(renderer, a->getTexture(), NULL, &a->getdestR()); // afficher la bullet
 	}
@@ -273,7 +415,13 @@ void Game::clean(){
 	{
 		delete w;
 	}
+	if (_mode==3) {
+		delete samy;
+		delete younes;
+	}
+	else{
 	delete samy;
+}
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	//TTF_CloseFont(font);

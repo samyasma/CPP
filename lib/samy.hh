@@ -10,7 +10,7 @@ public:
 	//Smoke();
 	~Samy(){std::cout << "~Sa" << std::endl;}
 	Samy():Personnage(300,400,200,200, "./images/samy.png"){}
-	Samy(double x, double y):Personnage(x,y,200,200, "./images/samy.png"){}
+	Samy(double x, double y,unsigned int id):Personnage(x,y,200,200, "./images/samy.png"){_id=id;}
 	void update(SDL_Event event, SDL_Renderer*& renderer);
 	void update();
 	void decrease();
@@ -25,6 +25,7 @@ public:
 private:
 	unsigned int id_weapon = 0; // 0 : arme par défaut , 1 : bazooka , 2 : sayen
 	bool Isfiring=false;
+	unsigned int _id;
 };
 
 #endif

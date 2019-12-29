@@ -18,6 +18,7 @@ public:
 	void CheckCollsion(Bullet* b);
 	void update();
 	void update(Samy*& samy, SDL_Renderer*& renderer);
+	void update(Samy*& samy,Samy*& younes, SDL_Renderer*& renderer);
 	void reset(SDL_Renderer*& renderer);
 	void recoit(SDL_Renderer*& renderer);
 	void walk(SDL_Renderer*& renderer);

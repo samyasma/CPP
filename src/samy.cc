@@ -11,8 +11,10 @@ void Samy::update(SDL_Event event, SDL_Renderer*& renderer){
         {
             this->reset(renderer);
         }
-    	switch (event.key.keysym.sym)
-        {
+      if (_id==1){
+    	   switch (event.key.keysym.sym)
+         {
+
             case SDLK_LEFT:  _x-=8; this->setLeft();break;
             case SDLK_RIGHT: _x+=8; this->setRight();break;
             case SDLK_UP:
@@ -26,7 +28,26 @@ void Samy::update(SDL_Event event, SDL_Renderer*& renderer){
               break;
             case SDLK_LSHIFT: this->ramasse(renderer);break;
             //case SDLK_DOWN:  _y+=5; break;
+          }
         }
+      else{
+            switch(event.key.keysym.sym)
+              {
+            case SDLK_q:  _x-=8; this->setLeft();break;
+            case SDLK_d: _x+=8; this->setRight();break;
+            case SDLK_z:
+                if (!_jump)
+                {
+                    this->jump();
+                }
+                break;
+            case SDLK_c:
+              this->Attack(renderer);
+              break;
+            case SDLK_v: this->ramasse(renderer);break;
+          }
+        }
+
     }else{
         this->dead(renderer);
     }
@@ -42,6 +63,7 @@ void Samy::dead(SDL_Renderer*& renderer){
 }
 
 void Samy::update(){
+
     if (_jump)
     {
         if (_y >=MAX_HEIGHT && _up)
@@ -124,7 +146,7 @@ void Samy::setWeapon(int i){
 	id_weapon = i;
 }
 
-void Samy::decrease(){   
+void Samy::decrease(){
     if (_stamina > 0)
     {
         _stamina -= 0.2;

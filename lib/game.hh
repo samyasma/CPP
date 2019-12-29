@@ -40,9 +40,12 @@ private:
 	SDL_Renderer *renderer;
 	std::vector<Smoke*> smokeVec;
 	std::vector<Bullet*> bulletVec;
+	std::vector<Samy*> Players;
 	std::vector<Weapon*> WeaponVec = {};
 	Samy* samy;
 	int cpt_weapon = 0;
+	int _mode;
+	Samy* younes;
 	//TTF_Font * font = TTF_OpenFont("arial.ttf", 25);
 	//SDL_Color color = { 255, 255, 255 };
 };

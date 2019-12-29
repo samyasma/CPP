@@ -15,11 +15,11 @@ void run(int i, const int frameDelay){
 
 	while(game->running()){
 		frameStart = SDL_GetTicks();
-		//std:: cout << "handle" << std::endl;
+		std:: cout << "handle" << std::endl;
 		game->handleEvents(); // Handle any user input
-		//std:: cout << "update" << std::endl;
+		std:: cout << "update" << std::endl;
 		game->update(); // update all objects
-		//std:: cout << "render" << std::endl;
+		std:: cout << "render" << std::endl;
 		game->render(); // render changes to the display
 		//std:: cout << "fin" << std::endl;
 
@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
 		i = menu->handleEvents();
 		menu->update();
 		menu->render();
-		if(i == 2 or i == 1){
+		if(i==3 || i == 2 || i == 1){
 			run(i, frameDelay);
 			break;
 		}
