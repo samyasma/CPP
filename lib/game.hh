@@ -16,12 +16,14 @@
 #include "../lib/samy.hh"
 #include "../lib/bazooka.hh"
 #include "../lib/dragonball.hh"
+#include <chrono>
+
 
 class Game{
 public:
 	Game();
 	~Game();
-	void init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int difficulty);
+	void init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int difficulty, bool soviet_mode);
 	void handleEvents();
 	void update();
 	void render();
@@ -33,6 +35,7 @@ public:
 	void weaponupdate(Samy* samy);
 	std::vector<Smoke*> getListSmoke(){return smokeVec;}
 	void setScore();
+	void setTimer();
 private:
 	unsigned int _difficulty;
 	bool isrunning;
@@ -46,8 +49,7 @@ private:
 	int cpt_weapon = 0;
 	int _mode;
 	Samy* younes;
-	//TTF_Font * font = TTF_OpenFont("arial.ttf", 25);
-	//SDL_Color color = { 255, 255, 255 };
+	std::chrono::steady_clock::time_point temps_fin;
 };
 
 #endif

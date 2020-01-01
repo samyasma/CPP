@@ -21,7 +21,8 @@ Game::~Game(){
 
 
 
-void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int mode){
+void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int mode, bool soviet_mode){
+	temps_fin=std::chrono::steady_clock::now() + std::chrono::seconds(120);
 	//TTF_Init();
 	_mode=mode;
 	int flags = 0;
@@ -57,7 +58,9 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 	// Création du fond ainsi que du personnage principal voir la vidéo pour comprendre comment ça marche
 
-
+	if (soviet_mode) {
+		terrain1= new Terrain("./images/background2.png");
+	}
 	background_im = SDL_CreateTextureFromSurface(renderer, terrain1->getSurface());
 	if (_mode==3) {
 		samy = new Samy(450, LEVEL_HEIGHT,1);
@@ -138,35 +141,113 @@ void Game::weaponupdate(Samy* samy){
 		}
 	}
 }
-
+//////////////SET SCORE
 void Game::setScore(){
-	 /*TTF_Font *font;
-	 font=TTF_OpenFont("angelina.ttf", 16);
-	 SDL_Color color={230,230,230};
-	 SDL_Surface* text = TTF_RenderText_Solid(font,std::to_string(killed).c_str(), color);
-	 SDL_Texture * texture_text = SDL_CreateTextureFromSurface(renderer, text);
-	 int texW = 100;
-	 int texH = 250;
-	 SDL_QueryTexture(texture_text, NULL, NULL, &texW, &texH);
-	 SDL_Rect dstrect = { 159, 450, texW, texH };
-	 SDL_RenderCopy(renderer, texture_text, NULL, &dstrect);
+	if(TTF_Init()<0){ //init ttf pour l'écriture
+	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
+	   exit(EXIT_FAILURE);
+	  }
+int fontsize = 40;
+int t_width = 0; // width of the loaded font-texture
+int t_height = 0; // height of the loaded font-texture
+SDL_Color text_color = {250,100,88};
+std::string fontpath = "/home/samy/Bureau/MAIN4/C++/projet/CPP/src/OpenSans-Bold.ttf";
+std::string text ="Kill :"+std::to_string(killed);
+TTF_Font* font = TTF_OpenFont(fontpath.c_str(), fontsize);
+SDL_Texture* ftexture = NULL; // our font-texture
+
+// check to see that the font was loaded correctly
+if (font == NULL) {
+	 std::cerr << "Failed the load the font!\n";
+	 std::cerr << "SDL_TTF Error: " << TTF_GetError() << "\n";
+}
+else {
+	 // now create a surface from the font
+	 SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), text_color);
+
+	 // render the text surface
+	 if (text_surface == NULL) {
+			 std::cerr << "Failed to render text surface!\n";
+			 std::cerr << "SDL_TTF Error: " << TTF_GetError() << "\n";
+	 }
+	 else {
+			 // create a texture from the surface
+			 ftexture = SDL_CreateTextureFromSurface(renderer, text_surface);
+
+			 if (ftexture == NULL) {
+					 std::cerr << "Unable to create texture from rendered text!\n";
+			 }
+			 else {
+					 t_width = text_surface->w; // assign the width of the texture
+					 t_height = text_surface->h; // assign the height of the texture
+
+					 // clean up after ourselves (destroy the surface)
+					 SDL_FreeSurface(text_surface);
+			 }
+	 }
+}
+TTF_CloseFont(font);
+TTF_Quit();
+int x = 30;
+int y = 150;
+SDL_Rect dst = {x, y, t_width, t_height};
+SDL_RenderCopy(renderer, ftexture, NULL, &dst);
+
+}
+/////////TIMER:
+void Game::setTimer(){
+	if(TTF_Init()<0){ //init ttf pour l'écriture
+	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
+	   exit(EXIT_FAILURE);
+	  }
+int fontsize = 40;
+int t_width = 0; // width of the loaded font-texture
+int t_height = 0; // height of the loaded font-texture
+SDL_Color text_color = {45,150,88};
+std::string fontpath = "/home/samy/Bureau/MAIN4/C++/projet/CPP/src/OpenSans-Bold.ttf";
+std::chrono::duration<double> elapsed_seconds=temps_fin-(std::chrono::steady_clock::now());
+std::string text = "Timer :"+std::to_string(int(elapsed_seconds.count()));
+TTF_Font* font = TTF_OpenFont(fontpath.c_str(), fontsize);
+SDL_Texture* ftexture = NULL; // our font-texture
+
+// check to see that the font was loaded correctly
+if (font == NULL) {
+	 std::cerr << "Failed the load the font!\n";
+	 std::cerr << "SDL_TTF Error: " << TTF_GetError() << "\n";
+}
+else {
+	 // now create a surface from the font
+	 SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), text_color);
+
+	 // render the text surface
+	 if (text_surface == NULL) {
+			 std::cerr << "Failed to render text surface!\n";
+			 std::cerr << "SDL_TTF Error: " << TTF_GetError() << "\n";
+	 }
+	 else {
+			 // create a texture from the surface
+			 ftexture = SDL_CreateTextureFromSurface(renderer, text_surface);
+
+			 if (ftexture == NULL) {
+					 std::cerr << "Unable to create texture from rendered text!\n";
+			 }
+			 else {
+					 t_width = text_surface->w; // assign the width of the texture
+					 t_height = text_surface->h; // assign the height of the texture
+
+					 // clean up after ourselves (destroy the surface)
+					 SDL_FreeSurface(text_surface);
+			 }
+	 }
+}
+TTF_CloseFont(font);
+TTF_Quit();
+int x = 30;
+int y = 90;
+SDL_Rect dst = {x, y, t_width, t_height};
+SDL_RenderCopy(renderer, ftexture, NULL, &dst);
 
 
-	  SDL_Surface *texte = NULL;*/
-
-TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24); //this opens a font style and sets a size
-SDL_Color White = {0,0,0};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
-SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, std::to_string(killed).c_str(), White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
-SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
-
-SDL_Rect Message_rect; //create a rect
-Message_rect.x = 46;  //controls the rect's x coordinate
-Message_rect.y = 535; // controls the rect's y coordinte
-Message_rect.w = 100; // controls the width of the rect
-Message_rect.h = 100; // controls the height of the rect
-
-
-SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
 }
 
 
@@ -381,6 +462,7 @@ void Game::render(){
 	SDL_RenderCopy(renderer, background_im, NULL, NULL); // placer le background
 	this->setHealthStamina(); // placer les barres de health et stamina
 	this->setScore();
+	this->setTimer();
 	//this->setText();
 	for(auto perso : smokeVec){
 		SDL_RenderCopy(renderer, perso->getTexture(), NULL, &perso->getdestR()); // copier tout les 'smokes' dans la liste de smokes
