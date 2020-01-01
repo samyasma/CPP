@@ -1,11 +1,9 @@
 #include "../lib/game.hh"
 #include <SDL2/SDL_ttf.h>
-SDL_Texture* background_im;
-Terrain* terrain1 = new Terrain("./images/background1.gif");
+
 
 Uint32 timeStart = SDL_GetTicks();
 
-int killed = 0;
 
 const int LEVEL_HEIGHT = 400;
 const int LEVEL_WIDTH = 1000;
@@ -22,8 +20,10 @@ Game::~Game(){
 
 
 void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int mode, bool soviet_mode){
+	killed=0;
 	temps_fin=std::chrono::steady_clock::now() + std::chrono::seconds(120);
 	//TTF_Init();
+	Terrain* terrain1 = new Terrain("./images/background1.gif");
 	_mode=mode;
 	int flags = 0;
 	if (_mode == 2)
@@ -246,7 +246,6 @@ int x = 30;
 int y = 90;
 SDL_Rect dst = {x, y, t_width, t_height};
 SDL_RenderCopy(renderer, ftexture, NULL, &dst);
-
 
 }
 
@@ -506,8 +505,7 @@ void Game::clean(){
 }
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
-	//TTF_CloseFont(font);
-	//TTF_Quit();
 	SDL_Quit();
 	std::cout << "fin " << killed << std::endl;
+	killed=0;
 }

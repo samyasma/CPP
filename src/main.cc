@@ -10,7 +10,7 @@ Game *game = nullptr;
 Menu* menu = nullptr;
 MenuFin* menufin=nullptr;
 
-void run(int i, const int frameDelay,bool soviet_mode){
+int  run(int i, const int frameDelay,bool soviet_mode){
 	game = new Game();
 	game->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,1000,600, false, i,soviet_mode);
 	Uint32 frameStart; // gestion des frames
@@ -36,23 +36,31 @@ void run(int i, const int frameDelay,bool soviet_mode){
 		}
 		// Pourquoi tout ça ?? pour rendre les déplacements plus smooth !!
 	}
+	int mort;
+	mort=game->getKilled();
 	game->clean();
 	delete game;
 	std::cout << "fin game" << std::endl;
+	return mort;
 }
 
 int main(int argc, char const *argv[])
 {
-	sf::Music music;
-	if (!music.openFromFile("/home/samy/Bureau/MAIN4/C++/projet/CPP/src/aristocrate.ogg")){
+	sf::Music music1;
+	sf::Music music2;
+	if (!music1.openFromFile("/home/samy/Bureau/MAIN4/C++/projet/CPP/src/aristocrate.ogg")){
     std::cerr << "ERROR" << std::endl;; // error
 	}
-	music.play();
+	if (!music2.openFromFile("/home/samy/Bureau/MAIN4/C++/projet/CPP/src/URSS.ogg")){
+		std::cerr << "ERROR" << std::endl;; // error
+	}
+	music1.play();
 	srand(time(NULL));
 	const int FPS = 60;
 	const int frameDelay = 1000/FPS;
 	menu = new Menu();
 	menufin=new MenuFin();
+	int mort;
 	menu->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600, false);
 	//bool activate = false;
 	int i = 0;
@@ -61,28 +69,41 @@ int main(int argc, char const *argv[])
 		menu->update();
 		menu->render();
 		if(i==3 || i == 2 || i == 1){
-			run(i, frameDelay,false);
+			mort=run(i, frameDelay,false);
 			break;
 		}
 	}
 	menu->clean();
 	delete menu;
-	menufin->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600, false);
+
+	// menu fin
+	int party=0;
+	while (party<5) {
+
+	menufin->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600, false,mort);
 	int j=0;
 	while(menufin->running()){
 		j = menufin->handleEvents();
 		menufin->update();
 		menufin->render();
 		if(j==3){
-			run(i, frameDelay,true);
+			music1.pause();
+			music2.play();
+			mort=run(i, frameDelay,true);
 			break;
 		}
 		if (j==1) {
-			run(i, frameDelay,false);
+			music2.pause();
+			music1.play();
+			mort=run(i, frameDelay,false);
 			break;
 		}
 	}
 	menufin->clean();
+	menufin=nullptr;
+	menufin=new MenuFin();
+	party+=1;
+}
 	delete menufin;
 	return 0;
 }

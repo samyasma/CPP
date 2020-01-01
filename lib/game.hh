@@ -32,6 +32,7 @@ public:
 	bool running(){return isrunning;}
 	void setHealthStamina();
 	void setText();
+	int getKilled(){return killed;}
 	void weaponupdate(Samy* samy);
 	std::vector<Smoke*> getListSmoke(){return smokeVec;}
 	void setScore();
@@ -50,6 +51,8 @@ private:
 	int _mode;
 	Samy* younes;
 	std::chrono::steady_clock::time_point temps_fin;
+	int killed;
+	SDL_Texture* background_im;
 };
 
 #endif
