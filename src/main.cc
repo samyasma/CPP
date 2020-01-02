@@ -48,10 +48,10 @@ int main(int argc, char const *argv[])
 {
 	sf::Music music1;
 	sf::Music music2;
-	if (!music1.openFromFile("/home/samy/Bureau/MAIN4/C++/projet/CPP/src/aristocrate.ogg")){
+	if (!music1.openFromFile("src/aristocrate.ogg")){
     std::cerr << "ERROR" << std::endl;; // error
 	}
-	if (!music2.openFromFile("/home/samy/Bureau/MAIN4/C++/projet/CPP/src/URSS.ogg")){
+	if (!music2.openFromFile("src/URSS.ogg")){
 		std::cerr << "ERROR" << std::endl;; // error
 	}
 	music1.play();
