@@ -28,9 +28,9 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 	int flags = 0;
 	if (_mode == 2)
 	{
-		_difficulty = 500;
+		_difficulty = 2000;
 	}else{
-		_difficulty = 3000;
+		_difficulty = 6000;
 	}
 	if (fullscreen)
 	{
@@ -60,6 +60,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 	if (soviet_mode) {
 		terrain1= new Terrain("./images/background2.png");
+		_difficulty = 500;
 	}
 	background_im = SDL_CreateTextureFromSurface(renderer, terrain1->getSurface());
 	if (_mode==3) {
@@ -251,6 +252,9 @@ SDL_RenderCopy(renderer, ftexture, NULL, &dst);
 
 
 void Game::update(){
+	if(_difficulty > 200){
+		_difficulty -= 0.0001;
+	}
 	if(_mode==3 and Players.size()>1){
 		for (auto a: Players) {
 			a->update();

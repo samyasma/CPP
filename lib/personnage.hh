@@ -8,15 +8,15 @@
 class Personnage: public Shape{
   public :
   Personnage();
-  Personnage(double x, double y, int vie, int stamina, const char* path_to_image):Shape(x, y){_vie = vie; _stamina = stamina; _vivant = true;surface = IMG_Load(path_to_image);destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;}
+  Personnage(double x, double y, int vie, int stamina, const char* path_to_image);//:Shape(x, y){_vie = vie; _stamina = stamina; _vivant = true;surface = IMG_Load(path_to_image);destR.w = 128;destR.h = 128;destR.x = _x;destR.y = _y;}
   virtual void Attack(SDL_Renderer*& renderer) = 0;
   void Defense();
   virtual ~Personnage();
   virtual void update(SDL_Event event, SDL_Renderer*& renderer) = 0;
-  void freeS(){SDL_FreeSurface(surface);}
-  SDL_Surface* getSurface(){return surface;}
-  bool estVivant(){return _vivant;}
-  SDL_Rect& getdestR(){return destR;}
+  void freeS();
+  SDL_Surface* getSurface();
+  bool estVivant();
+  SDL_Rect& getdestR();
   void jump(){_jump=true;_up = true;}
   void setPicture(SDL_Renderer*& renderer){player_im = SDL_CreateTextureFromSurface(renderer, surface);SDL_FreeSurface(surface);}
   SDL_Texture* getTexture(){return player_im;}

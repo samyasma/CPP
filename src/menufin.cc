@@ -51,6 +51,7 @@ int MenuFin::handleEvents(){
 	switch(event.type){
 		case SDL_QUIT:
 			isrunning = false;
+			i = 4;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 		 	SDL_BUTTON(SDL_GetMouseState(&x, &y));

@@ -158,3 +158,28 @@ void Samy::decrease(){
         _vivant = false;
     }
 }
+
+
+void Samy::walk(SDL_Renderer*& renderer){
+    id_walk += 0.5;
+    if (right)
+    {
+        //std::cout << id_walk << std::endl;
+        if(id_walk > 9){
+            id_walk = 2;
+        }
+        std::string txt = "./images/younes" + std::to_string(int(floor(id_walk)))+".png";
+        //std::string txt2 = ".png"
+        const char *c = txt.c_str();
+        surface = IMG_Load(c);
+    }else{
+        if(id_walk > 9){
+            id_walk = 2;
+        }
+        std::string txt = "./images/younes" + std::to_string(int(floor(id_walk)))+"r.png";
+        //std::string txt2 = ".png"
+        const char *c = txt.c_str();
+        surface = IMG_Load(c);
+    }
+    this->setPicture(renderer);
+}

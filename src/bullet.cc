@@ -3,6 +3,12 @@
 #include "../lib/bullet.hh"
 
 
+Bullet::~Bullet(){
+	this->freeS();
+	SDL_DestroyTexture(bullet_im);
+	std::cout << "~B" << std::endl;
+}
+
 void Bullet::update(SDL_Renderer*& renderer){
 	if (id_bullet == 2)
 	{

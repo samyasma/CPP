@@ -15,8 +15,7 @@ int  run(int i, const int frameDelay,bool soviet_mode){
 	game->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,1000,600, false, i,soviet_mode);
 	Uint32 frameStart; // gestion des frames
 	int frameTime;
-	std::chrono::steady_clock::time_point tend = std::chrono::steady_clock::now()
-																						 + std::chrono::seconds(120);
+	std::chrono::steady_clock::time_point tend = std::chrono::steady_clock::now()+ std::chrono::seconds(120);
 	//while(game->running()){
   while (std::chrono::steady_clock::now() < tend && game->running())
     {
@@ -49,7 +48,7 @@ int main(int argc, char const *argv[])
 	sf::Music music1;
 	sf::Music music2;
 	if (!music1.openFromFile("src/aristocrate.ogg")){
-    std::cerr << "ERROR" << std::endl;; // error
+    	std::cerr << "ERROR" << std::endl;; // error
 	}
 	if (!music2.openFromFile("src/URSS.ogg")){
 		std::cerr << "ERROR" << std::endl;; // error
@@ -78,12 +77,17 @@ int main(int argc, char const *argv[])
 
 	// menu fin
 	int party=0;
-	while (party<5) {
+	while (menufin->running() && party<5) {
 
 	menufin->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600, false,mort);
 	int j=0;
 	while(menufin->running()){
 		j = menufin->handleEvents();
+		if (j == 4)
+		{
+			menufin->clean();
+			break;
+		}
 		menufin->update();
 		menufin->render();
 		if(j==3){
@@ -100,8 +104,10 @@ int main(int argc, char const *argv[])
 		}
 	}
 	menufin->clean();
-	menufin=nullptr;
-	menufin=new MenuFin();
+	if(j != 4){
+		menufin=nullptr;
+		menufin=new MenuFin();
+	}
 	party+=1;
 }
 	delete menufin;

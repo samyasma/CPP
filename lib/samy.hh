@@ -22,10 +22,12 @@ public:
 	void setIsfiring(bool b){Isfiring=b;}
 	void setWeapon(int i);
 	unsigned int getIdWeapon(){return id_weapon;}
+	void walk(SDL_Renderer*& renderer);
 private:
 	unsigned int id_weapon = 0; // 0 : arme par défaut , 1 : bazooka , 2 : sayen
 	bool Isfiring=false;
 	unsigned int _id;
+	double id_walk = 2.0;
 };
 
 #endif
