@@ -47,7 +47,7 @@ int main(int argc, char const *argv[])
 {
 	sf::Music music1;
 	sf::Music music2;
-	if (!music1.openFromFile("src/aristocrate.ogg")){
+	if (!music1.openFromFile("src/TheHaunting.ogg")){
     	std::cerr << "ERROR" << std::endl;; // error
 	}
 	if (!music2.openFromFile("src/URSS.ogg")){

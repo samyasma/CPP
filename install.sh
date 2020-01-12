@@ -2,7 +2,6 @@
 
 echo "Welcome to Smoke - v1.0 - ASMA Samy - BELKADA Younes"
 echo "You need to install [SDL2/SDL2_ttf/SFML_audio] [Y/N]?"
-
 read input
 
 if [ $input == "Y" ]; then
