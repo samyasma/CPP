@@ -9,6 +9,11 @@ Bullet::~Bullet(){
 	std::cout << "~B" << std::endl;
 }
 
+void Bullet::setPicture(SDL_Renderer*& renderer){
+	SDL_DestroyTexture(bullet_im);
+	bullet_im = SDL_CreateTextureFromSurface(renderer, surface);
+}
+
 void Bullet::update(SDL_Renderer*& renderer){
 	if (id_bullet == 2)
 	{

@@ -16,7 +16,7 @@ class Bullet: public Shape{
   void reset(SDL_Renderer*& renderer);
   void freeS(){SDL_FreeSurface(surface);}
   SDL_Surface* getSurface(){return surface;}
-  void setPicture(SDL_Renderer*& renderer){bullet_im = SDL_CreateTextureFromSurface(renderer, surface);}//SDL_FreeSurface(surface);}
+  void setPicture(SDL_Renderer*& renderer);//SDL_FreeSurface(surface);}
   SDL_Texture* getTexture(){return bullet_im;}
   SDL_Rect& getdestR(){return destR;}
   void setTrue(){is_on_map = true;}

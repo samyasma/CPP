@@ -44,6 +44,7 @@ Personnage::~Personnage(){
 
 
 void Personnage::setPicture(SDL_Renderer*& renderer){
+	SDL_DestroyTexture(player_im);
 	player_im = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_FreeSurface(surface);
 }
