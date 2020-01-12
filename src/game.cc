@@ -1,6 +1,6 @@
 #include "../lib/game.hh"
 #include <SDL2/SDL_ttf.h>
-
+#include <SFML/Audio.hpp>
 
 Uint32 timeStart = SDL_GetTicks();
 

@@ -47,12 +47,14 @@ int main(int argc, char const *argv[])
 {
 	sf::Music music1;
 	sf::Music music2;
-	if (!music1.openFromFile("src/TheHaunting.ogg")){
+	if (!music1.openFromFile("src/Radioactive.ogg")){
     	std::cerr << "ERROR" << std::endl;; // error
 	}
 	if (!music2.openFromFile("src/URSS.ogg")){
 		std::cerr << "ERROR" << std::endl;; // error
 	}
+	music1.setVolume(5.0);
+	music2.setVolume(5.0);
 	music1.play();
 	srand(time(NULL));
 	const int FPS = 60;
@@ -110,6 +112,8 @@ int main(int argc, char const *argv[])
 	}
 	party+=1;
 }
+	music1.stop();
+	music2.stop();
 	delete menufin;
 	return 0;
 }

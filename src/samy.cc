@@ -135,11 +135,6 @@ void Samy::Attack(SDL_Renderer*& renderer){
 	        surface = IMG_Load("./images/samy_bazookar.png");
 	    }
 	}else{
-        sf::Music sound;
-        if (!sound.openFromFile("src/shotgun-old_school-RA_The_Sun_God-1129942741.ogg")){
-            std::cerr << "ERROR" << std::endl;; // error
-        }
-        sound.play();
 	    if(this->getRight()){
 	        surface = IMG_Load("./images/samy_p.png");
 	    }else{
