@@ -9,9 +9,9 @@
 class DragonBall: public Weapon{
   public :
   DragonBall();
-  DragonBall(double x, double y):Weapon(x,y){}
-  ~DragonBall(){std::cout << "~DragonBallGone" << std::endl;}
-  void update(SDL_Event event, SDL_Renderer*& renderer){}
+  DragonBall(double x, double y);
+  ~DragonBall();
+  void update(SDL_Event event, SDL_Renderer*& renderer);
   void update(SDL_Renderer*& renderer);
   bool update(Samy*& samy);
 private:

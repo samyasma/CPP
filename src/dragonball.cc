@@ -3,6 +3,18 @@
 #include "../lib/dragonball.hh"
 
 
+DragonBall::~DragonBall(){
+  std::cout << "~DragonBallGone" << std::endl;
+}
+
+DragonBall::DragonBall(double x, double y):Weapon(x,y){
+
+}
+
+void DragonBall::update(SDL_Event event, SDL_Renderer*& renderer){
+  
+}
+
 void DragonBall::update(SDL_Renderer*& renderer){
   surface=IMG_Load("./images/dragonball.png");
   if (this->getRight())

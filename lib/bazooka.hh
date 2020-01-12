@@ -9,9 +9,9 @@
 class Bazooka: public Weapon{
   public :
   Bazooka();
-  Bazooka(double x, double y):Weapon(x,y){}
-  ~Bazooka(){std::cout << "~BazookaGone" << std::endl;}
-  void update(SDL_Event event, SDL_Renderer*& renderer){}
+  Bazooka(double x, double y);
+  ~Bazooka();
+  void update(SDL_Event event, SDL_Renderer*& renderer);
   void update(SDL_Renderer*& renderer);
   bool update(Samy*& samy);
 private:

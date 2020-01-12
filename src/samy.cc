@@ -4,7 +4,31 @@
 #include <SFML/Audio.hpp>
 
 const int MAX_HEIGHT = 270; // niveau max quand on saute
-const int GROUND = 400; // niveu du sol
+const int GROUND = 400; // niveau du sol
+
+Samy::~Samy(){
+    std::cout << "~Sa" << std::endl;
+}
+
+Samy::Samy():Personnage(300,400,200,200, "./images/samy.png"){
+
+}
+
+Samy::Samy(double x, double y,unsigned int id):Personnage(x,y,200,200, "./images/samy.png"){
+    _id=id;
+}
+
+bool Samy::getIsfiring(){
+    return Isfiring;
+}
+
+void Samy::setIsfiring(bool b){
+    Isfiring=b;
+}
+
+unsigned int Samy::getIdWeapon(){
+    return id_weapon;
+}
 
 void Samy::update(SDL_Event event, SDL_Renderer*& renderer){
     if(_vivant){

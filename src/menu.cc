@@ -73,6 +73,10 @@ void Menu::update(){
 
 }
 
+bool Menu::running(){
+	return isrunning;	
+}
+
 void Menu::render(){
 	SDL_RenderClear(renderer);
 	// disposition des objets A JOUR, toujours mettre le background au début
@@ -86,3 +90,4 @@ void Menu::clean(){
 	SDL_Quit();
 	std::cout << "fin " << std::endl;
 }
+

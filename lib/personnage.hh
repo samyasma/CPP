@@ -18,14 +18,14 @@ class Personnage: public Shape{
   bool estVivant();
   SDL_Rect& getdestR();
   void jump(){_jump=true;_up = true;}
-  void setPicture(SDL_Renderer*& renderer){player_im = SDL_CreateTextureFromSurface(renderer, surface);SDL_FreeSurface(surface);}
-  SDL_Texture* getTexture(){return player_im;}
-  bool getJump(){return _jump;}
-  int getStamina(){return _stamina;}
-  int getVie(){return _vie;}
-  void setLeft(){right = false;}
-  void setRight(){right = true;}
-  bool getRight(){return right;}
+  void setPicture(SDL_Renderer*& renderer);
+  SDL_Texture* getTexture();
+  bool getJump();
+  int getStamina();
+  int getVie();
+  void setLeft();
+  void setRight();
+  bool getRight();
   protected:
     int _vie;
     int _stamina;

@@ -35,3 +35,15 @@ bool Bazooka::update(Samy*& samy){
 		return false;
 	}
 }
+
+Bazooka::Bazooka(double x, double y):Weapon(x,y){
+
+}
+
+Bazooka::~Bazooka(){
+  std::cout << "~BazookaGone" << std::endl;
+}
+
+void Bazooka::update(SDL_Event event, SDL_Renderer*& renderer){
+  
+}

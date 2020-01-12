@@ -36,24 +36,42 @@ SDL_Rect& Personnage::getdestR(){
 	return destR;
 }
 
-// void Personnage::update(SDL_Event event){
-// 	switch (event.key.keysym.sym)
-//     {
-//         case SDLK_LEFT:  _x-=5; break;
-//         case SDLK_RIGHT: _x+=5; break;
-//         case SDLK_UP:    _y-=5; break;
-//         case SDLK_DOWN:  _y+=5; break;
-//     }
-//     destR.w = 128;
-// 	destR.h = 128;
-// 	destR.x = _x;
-// 	destR.y = _y;
-// 	_stamina -= 0.5;
-// }
-
 Personnage::~Personnage(){
+	//this->freeS(); ça marche pas
 	SDL_DestroyTexture(player_im);
 	std::cout << "~P" << std::endl;
 }
 
 
+void Personnage::setPicture(SDL_Renderer*& renderer){
+	player_im = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FreeSurface(surface);
+}
+
+SDL_Texture* Personnage::getTexture(){
+	return player_im;
+}
+
+bool Personnage::getJump(){
+	return _jump;
+}
+
+int Personnage::getStamina(){
+	return _stamina;
+}
+
+void Personnage::setLeft(){
+	right = false;
+}
+
+int Personnage::getVie(){
+	return _vie;
+}
+
+void Personnage::setRight(){
+	right = true;
+}
+
+bool Personnage::getRight(){
+	return right;
+}

@@ -20,11 +20,11 @@ int  run(int i, const int frameDelay,bool soviet_mode){
   while (std::chrono::steady_clock::now() < tend && game->running())
     {
 		frameStart = SDL_GetTicks();
-		std:: cout << "handle" << std::endl;
+		//std:: cout << "handle" << std::endl;
 		game->handleEvents(); // Handle any user input
-		std:: cout << "update" << std::endl;
+		//std:: cout << "update" << std::endl;
 		game->update(); // update all objects
-		std:: cout << "render" << std::endl;
+		//std:: cout << "render" << std::endl;
 		game->render(); // render changes to the display
 		//std:: cout << "fin" << std::endl;
 

@@ -19,7 +19,7 @@ public:
 	void update();
 	void render();
 	void clean();
-	bool running(){return isrunning;}
+	bool running();
 private:
 	bool isrunning;
 	SDL_Window *window;

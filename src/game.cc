@@ -14,10 +14,38 @@ Game::Game(){
 }
 
 Game::~Game(){
-
+	for (auto p : smokeVec)
+	{
+		delete p;
+	}
+	for (auto a : bulletVec)
+	{
+		delete a;
+	}
+	for (auto w : WeaponVec)
+	{
+		delete w;
+	}
+	if (_mode==3) {
+		delete samy;
+		delete younes;
+	}
+	else{
+		delete samy;
+	}
 }
 
+bool Game::running(){
+	return isrunning;
+}
 
+int Game::getKilled(){
+	return killed;
+}
+
+std::vector<Smoke*> Game::getListSmoke(){
+	return smokeVec;
+}
 
 void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int mode, bool soviet_mode){
 	killed=0;
@@ -260,7 +288,7 @@ void Game::update(){
 			a->update();
 		}
 		bool continuer=false;
-		std::cout << "ca marche" << std::endl;
+		//std::cout << "ca marche" << std::endl;
 		for (auto a: Players) {
 			if (a->estVivant()) {
 				continuer=true;
@@ -287,7 +315,7 @@ void Game::update(){
 		}
 			//std::cout << bulletVec.size() << std::endl;
 			//int i = 0;
-			std::cout << "ca marche3" << std::endl;
+			//std::cout << "ca marche3" << std::endl;
 			std::vector<Bullet*> bulletVec_temp = {};
 			for(auto a:  bulletVec){
 				//std:: cout << "peut etre ici 1" << std::endl;
@@ -488,25 +516,6 @@ void Game::render(){
 }
 
 void Game::clean(){
-	for (auto p : smokeVec)
-	{
-		delete p;
-	}
-	for (auto a : bulletVec)
-	{
-		delete a;
-	}
-	for (auto w : WeaponVec)
-	{
-		delete w;
-	}
-	if (_mode==3) {
-		delete samy;
-		delete younes;
-	}
-	else{
-	delete samy;
-}
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();

@@ -8,9 +8,9 @@
 class Samy : public Personnage{
 public:
 	//Smoke();
-	~Samy(){std::cout << "~Sa" << std::endl;}
-	Samy():Personnage(300,400,200,200, "./images/samy.png"){}
-	Samy(double x, double y,unsigned int id):Personnage(x,y,200,200, "./images/samy.png"){_id=id;}
+	~Samy();
+	Samy();
+	Samy(double x, double y,unsigned int id);
 	void update(SDL_Event event, SDL_Renderer*& renderer);
 	void update();
 	void decrease();
@@ -18,10 +18,10 @@ public:
 	void reset(SDL_Renderer*& renderer);
 	void dead(SDL_Renderer*& renderer);
 	void ramasse(SDL_Renderer*& renderer);
-	bool getIsfiring(){return Isfiring;}
-	void setIsfiring(bool b){Isfiring=b;}
+	bool getIsfiring();
+	void setIsfiring(bool b);
 	void setWeapon(int i);
-	unsigned int getIdWeapon(){return id_weapon;}
+	unsigned int getIdWeapon();
 	void walk(SDL_Renderer*& renderer);
 private:
 	unsigned int id_weapon = 0; // 0 : arme par défaut , 1 : bazooka , 2 : sayen

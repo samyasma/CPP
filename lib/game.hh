@@ -29,12 +29,12 @@ public:
 	void render();
 	void clean();
 	void generateSmoke();
-	bool running(){return isrunning;}
+	bool running();
 	void setHealthStamina();
 	void setText();
-	int getKilled(){return killed;}
+	int getKilled();
 	void weaponupdate(Samy* samy);
-	std::vector<Smoke*> getListSmoke(){return smokeVec;}
+	std::vector<Smoke*> getListSmoke();
 	void setScore();
 	void setTimer();
 private:
