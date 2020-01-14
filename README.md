@@ -1,6 +1,7 @@
 # Smoke
 
-![alt text](https://github.com/samyasma/CPP/master/src/title.png "Logo Title Text 1")
+![an image caption Source: Ultimate Funny Dog Videos Compilation 2013.](src/title.png)
+
 
 A funny single and multiplayer game in C++.
 
@@ -19,7 +20,7 @@ And follow the intructions
 
 ## Run the game
 
-To run the game, just type and execute the commande below :
+To run the game, just type and execute the command below :
 ```{shell}
 ./game
 ```
