@@ -17,7 +17,7 @@ class Personnage: public Shape{
   SDL_Surface* getSurface();
   bool estVivant();
   SDL_Rect& getdestR();
-  void jump(){_jump=true;_up = true;}
+  void jump();
   void setPicture(SDL_Renderer*& renderer);
   SDL_Texture* getTexture();
   bool getJump();

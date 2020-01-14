@@ -76,3 +76,8 @@ void Personnage::setRight(){
 bool Personnage::getRight(){
 	return right;
 }
+
+void Personnage::jump(){
+	_jump=true;
+	_up = true;
+}

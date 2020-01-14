@@ -8,11 +8,11 @@
 class Terrain: public Shape{
 public:
 	Terrain();
-	Terrain(const char* path_to_image){surface = IMG_Load(path_to_image);id = 1;}
-	~Terrain(){std::cout << "~S" << std::endl;}
-	void freeS(){SDL_FreeSurface(surface);}
-	SDL_Surface* getSurface(){return surface;}
-	void update(SDL_Event event, SDL_Renderer*& renderer){id += 1;}
+	Terrain(const char* path_to_image);
+	~Terrain();
+	void freeS();
+	SDL_Surface* getSurface();
+	void update(SDL_Event event, SDL_Renderer*& renderer);
 private:
 	int id;
 };
