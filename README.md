@@ -1,5 +1,5 @@
-# CPP
-
+# Smoke
+[id]: src/title.png "Title"
 A funny single and multiplayer game in C++.
 
 ## Installation
