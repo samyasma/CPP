@@ -48,12 +48,12 @@ std::vector<Smoke*> Game::getListSmoke(){
 }
 
 void Game::init(const char* title, int x, int y, int width, int height, bool fullscreen, unsigned int mode, bool soviet_mode){
-	killed=0;
-	temps_fin=std::chrono::steady_clock::now() + std::chrono::seconds(120);
-	//TTF_Init();
-	Terrain* terrain1 = new Terrain("./images/background1.gif");
-	_mode=mode;
+	killed=0; // nombre de mort
+	temps_fin=std::chrono::steady_clock::now() + std::chrono::seconds(120); // Timer
+	Terrain* terrain1 = new Terrain("./images/background1.gif"); //Mise en place du terrain
+	_mode=mode; //Le mode désigne la difficulté Easy ou Hard ou multiplayer
 	int flags = 0;
+	//Ici on decide de la difficulté du jeu
 	if (_mode == 2)
 	{
 		_difficulty = 2000;
@@ -64,7 +64,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
-
+ //Initialisation de la fenetre graphique
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		std::cout << "Initialisation ok" << std::endl;
@@ -84,13 +84,14 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 		isrunning = true;
 	}
 
-	// Création du fond ainsi que du personnage principal voir la vidéo pour comprendre comment ça marche
+	// Si le soviet mode est true, on change de background
 
 	if (soviet_mode) {
 		terrain1= new Terrain("./images/background2.png");
 		_difficulty = 500;
 	}
 	background_im = SDL_CreateTextureFromSurface(renderer, terrain1->getSurface());
+// le mode 3 est le mode multipjoueur
 	if (_mode==3) {
 		samy = new Samy(450, LEVEL_HEIGHT,1);
 		samy->setPicture(renderer);
@@ -102,25 +103,19 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 	else{
 		Samy* player_samy = new Samy(450, LEVEL_HEIGHT,1);
 		player_samy->setPicture(renderer);
-		//v.push_back(player_samy); // on ajoute Samy à la liste des personnages existants dans le jeu
 		samy = player_samy;
-		//player_im = SDL_CreateTextureFromSurface(renderer, player_samy->getSurface());
-		//SDL_Surface* tmpsurface = IMG_Load("./images/samy.png");
-		//player = SDL_CreateTexture4FromSurface(renderer, tmpsurface);
-		//SDL_FreeSurface(tmpsurface);
-		//player_samy->freeS();
+
 	}
 	// Fin de la création
 }
-
+// Permet de gérer les evenements claviers
 void Game::handleEvents(){
 	SDL_Event event;
 	SDL_PollEvent(&event);
-	if (_mode==3) {
+	if (_mode==3) { //cas multiplayer
 		switch(event.type){
 			case SDL_QUIT:
 				isrunning = false;
-				//std::cout <<"quit"<<std::endl;
 				break;
 			case SDL_KEYDOWN:
 				for (auto a: Players) {
@@ -133,7 +128,7 @@ void Game::handleEvents(){
 			}
 		}
 	else{
-		switch(event.type){
+		switch(event.type){ //cas joueur unique
 			case SDL_QUIT:
 				isrunning = false;
 				//std::cout <<"quit"<<std::endl;
@@ -170,7 +165,7 @@ void Game::weaponupdate(Samy* samy){
 		}
 	}
 }
-//////////////SET SCORE
+//////////////SET SCORE///////////////////////
 void Game::setScore(){
 	if(TTF_Init()<0){ //init ttf pour l'écriture
 	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
@@ -223,7 +218,7 @@ SDL_Rect dst = {x, y, t_width, t_height};
 SDL_RenderCopy(renderer, ftexture, NULL, &dst);
 
 }
-/////////TIMER:
+/////////TIMER:///////////////////////////
 void Game::setTimer(){
 	if(TTF_Init()<0){ //init ttf pour l'écriture
 	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
@@ -283,7 +278,7 @@ void Game::update(){
 	if(_difficulty > 200){
 		_difficulty -= 0.0001;
 	}
-	if(_mode==3 and Players.size()>1){
+	if(_mode==3 and Players.size()>1){ //Gerer le mode multijoueur
 		for (auto a: Players) {
 			a->update();
 		}
@@ -294,12 +289,12 @@ void Game::update(){
 				continuer=true;
 			}
 		}
-		if(continuer){
+		if(continuer){ //apparition des smokes si le nombre ne depasse pas 10
 			if (smokeVec.size() <= 10)
 			{
 				this->generateSmoke(); // ajouter un smoke mais pas plus de 10
 			}
-			for (auto a: Players) {
+			for (auto a: Players) { //Gerer si quelles sont les joueur qui tire
 
 				if(a->getIsfiring()==true && bulletVec.size() <= 10 + 5*a->getIdWeapon()){
 					Bullet* b;
@@ -313,9 +308,8 @@ void Game::update(){
 					a->setIsfiring(false);
 				}
 		}
-			//std::cout << bulletVec.size() << std::endl;
-			//int i = 0;
-			//std::cout << "ca marche3" << std::endl;
+
+			//Cette section gère la collision entre les bullet et les smoke et les elimine si il sont toucher
 			std::vector<Bullet*> bulletVec_temp = {};
 			for(auto a:  bulletVec){
 				//std:: cout << "peut etre ici 1" << std::endl;
@@ -348,6 +342,7 @@ void Game::update(){
 				}
 			}
 			smokeVec = smokeVec_alive;
+			//Cette partie gère l'attribution des armes
 			if (killed > 10 && WeaponVec.size() == 0 && cpt_weapon == 0)
 			{
 				Bazooka* bazooka = new Bazooka(rand()%800 +1, LEVEL_HEIGHT);
@@ -367,7 +362,7 @@ void Game::update(){
 			isrunning = false;
 		}
 }
-
+  // Cette partie a les memes fonctionnalité que celle d'en haut sauf quelle est adapté à un joueur unique
 	else{
 	samy->update(); // gestion du saut
 	unsigned int id_balle = samy->getIdWeapon();
@@ -481,8 +476,46 @@ void Game::setHealthStamina(){
     r2.h = 20;
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 155);
     SDL_RenderFillRect(renderer, &r2);
+ /////////////Mode multijoueur///
+    if (_mode==3){
+			SDL_Rect r3;
+		    r3.x = 580;
+		    r3.y = 15;
+		    r3.w = 400;
+		    r3.h = 20;
+		    SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
+		    SDL_RenderFillRect(renderer, &r3);
+		    SDL_Rect r4;
+		    r4.x = 580;
+		    r4.y = 15;
+		    if(double(younes->getStamina()/100.0) >= 0){
+		    	r4.w = 200.0*double(younes->getStamina()/100.0);
+		    }else{
+		    	r4.w = 0;
+		    }
+		    r4.h = 20;
+		    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 155);
+		    SDL_RenderFillRect(renderer, &r4);
 
-    // il manque les images
+		    // health bar
+
+		    r3.x = 580;
+		    r3.y = 40;
+		    r3.w = 400;
+		    r3.h = 20;
+		    SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
+		    SDL_RenderFillRect(renderer, &r3);
+		    r4.x = 580;
+		    r4.y = 40;
+		    if(double(younes->getVie()/100.0) >= 0){
+		    	r4.w = 200.0*double(younes->getVie()/100.0);
+		    }else{
+		    	r4.w = 0;
+		    }
+		    r4.h = 20;
+		    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 155);
+		    SDL_RenderFillRect(renderer, &r4);
+		}
 
 }
 
