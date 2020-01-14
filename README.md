@@ -1,6 +1,6 @@
 # Smoke
 
-![an image caption Source: Ultimate Funny Dog Videos Compilation 2013.](src/title.png)
+![](./src/title.png)
 
 
 A funny single and multiplayer game in C++.
