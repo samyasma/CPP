@@ -29,7 +29,7 @@ protected:
   bool right = true;
   bool is_on_map = false;
   SDL_Rect destR;
-  SDL_Surface* surface;
+  //SDL_Surface* surface;
   SDL_Texture* weapon_im = nullptr;
 };
 

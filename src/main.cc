@@ -79,9 +79,10 @@ int main(int argc, char const *argv[])
 
 	// menu fin
 	int party=0;
+	menufin->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600, false,mort);
 	while (menufin->running() && party<5) {
 
-	menufin->init("Smoke v1.0", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600, false,mort);
+	
 	int j=0;
 	while(menufin->running()){
 		j = menufin->handleEvents();

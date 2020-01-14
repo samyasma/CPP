@@ -34,7 +34,7 @@ class Personnage: public Shape{
     bool _up = false;
     bool _down = false;
     bool right = true;
-    SDL_Surface* surface;
+    //SDL_Surface* surface;
     SDL_Rect destR, srcR;
     SDL_Texture* player_im = nullptr;
 };

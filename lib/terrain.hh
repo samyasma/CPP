@@ -15,7 +15,6 @@ public:
 	void update(SDL_Event event, SDL_Renderer*& renderer){id += 1;}
 private:
 	int id;
-	SDL_Surface* surface;
 };
 
 #endif

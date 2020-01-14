@@ -20,6 +20,7 @@ public:
 protected:
 	double _x;
 	double _y;
+	SDL_Surface* surface;
 };
 
 #endif
