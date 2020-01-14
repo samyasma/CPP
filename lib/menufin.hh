@@ -20,6 +20,7 @@ public:
 	void render();
 	void clean();
 	void setKill();
+	void setBestScore();
 	bool running(){return isrunning;}
 private:
 	bool isrunning;

@@ -1,4 +1,5 @@
 #include "../lib/menufin.hh"
+#include <fstream>
 
 SDL_Texture* background_im3;
 
@@ -69,13 +70,77 @@ int MenuFin::handleEvents(){
 	}
 	return i;
 }
+void MenuFin::setBestScore(){
+	std::ifstream input("src/best_scores.txt");
+	int best_score;
+	input >> best_score;
+	std::ofstream output("best_scores.txt");
+	if (killed>best_score) {
+		output << killed;
+		best_score=killed;
+	}
+	else{
+		output << best_score;
+	}
 
-void MenuFin::setKill(){
 	if(TTF_Init()<0){ //init ttf pour l'écriture
 	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
 	   exit(EXIT_FAILURE);
 	  }
-int fontsize = 40;
+int fontsize = 20;
+int t_width = 0; // width of the loaded font-texture
+int t_height = 0; // height of the loaded font-texture
+SDL_Color text_color = {255,100,100};
+std::string fontpath = "src/OpenSans-Bold.ttf";
+std::string text = "Best Score is :  "+std::to_string(best_score);
+TTF_Font* font = TTF_OpenFont(fontpath.c_str(), fontsize);
+SDL_Texture* ftexture = NULL; // our font-texture
+
+// check to see that the font was loaded correctly
+if (font == NULL) {
+	 std::cerr << "Failed the load the font!\n";
+	 std::cerr << "SDL_TTF Error: " << TTF_GetError() << "\n";
+}
+else {
+	 // now create a surface from the font
+	 SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), text_color);
+
+	 // render the text surface
+	 if (text_surface == NULL) {
+			 std::cerr << "Failed to render text surface!\n";
+			 std::cerr << "SDL_TTF Error: " << TTF_GetError() << "\n";
+	 }
+	 else {
+			 // create a texture from the surface
+			 ftexture = SDL_CreateTextureFromSurface(renderer, text_surface);
+
+			 if (ftexture == NULL) {
+					 std::cerr << "Unable to create texture from rendered text!\n";
+			 }
+			 else {
+					 t_width = text_surface->w; // assign the width of the texture
+					 t_height = text_surface->h; // assign the height of the texture
+
+					 // clean up after ourselves (destroy the surface)
+					 SDL_FreeSurface(text_surface);
+			 }
+	 }
+}
+TTF_CloseFont(font);
+TTF_Quit();
+int x = 82;
+int y = 103;
+SDL_Rect dst = {x, y, t_width, t_height};
+SDL_RenderCopy(renderer, ftexture, NULL, &dst);
+
+}
+void MenuFin::setKill(){
+	this->setBestScore();
+	if(TTF_Init()<0){ //init ttf pour l'écriture
+	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
+	   exit(EXIT_FAILURE);
+	  }
+int fontsize = 20;
 int t_width = 0; // width of the loaded font-texture
 int t_height = 0; // height of the loaded font-texture
 SDL_Color text_color = {255,255,255};
@@ -117,7 +182,7 @@ else {
 TTF_CloseFont(font);
 TTF_Quit();
 int x = 269;
-int y = 43;
+int y = 53;
 SDL_Rect dst = {x, y, t_width, t_height};
 SDL_RenderCopy(renderer, ftexture, NULL, &dst);
 
