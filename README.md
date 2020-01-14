@@ -1,7 +1,4 @@
-# Smoke
-
 ![](./images/title.png)
-
 
 A funny single and multiplayer game in C++.
 
