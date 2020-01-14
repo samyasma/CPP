@@ -1,5 +1,7 @@
 # Smoke
-[id]: src/title.png "Title"
+
+![alt text](https://github.com/samyasma/CPP/master/src/title.png "Logo Title Text 1")
+
 A funny single and multiplayer game in C++.
 
 ## Installation
