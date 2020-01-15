@@ -87,12 +87,12 @@ void MenuFin::setBestScore(){
 	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
 	   exit(EXIT_FAILURE);
 	  }
-int fontsize = 20;
+int fontsize = 80;
 int t_width = 0; // width of the loaded font-texture
 int t_height = 0; // height of the loaded font-texture
 SDL_Color text_color = {255,100,100};
-std::string fontpath = "src/OpenSans-Bold.ttf";
-std::string text = "Best Score is :  "+std::to_string(best_score);
+std::string fontpath = "src/game_over.ttf";
+std::string text = "Best Score :  "+std::to_string(best_score);
 TTF_Font* font = TTF_OpenFont(fontpath.c_str(), fontsize);
 SDL_Texture* ftexture = NULL; // our font-texture
 
@@ -140,11 +140,11 @@ void MenuFin::setKill(){
 	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
 	   exit(EXIT_FAILURE);
 	  }
-int fontsize = 20;
+int fontsize = 80;
 int t_width = 0; // width of the loaded font-texture
 int t_height = 0; // height of the loaded font-texture
 SDL_Color text_color = {255,255,255};
-std::string fontpath = "src/OpenSans-Bold.ttf";
+std::string fontpath = "src/game_over.ttf";
 std::string text = std::to_string(killed);
 TTF_Font* font = TTF_OpenFont(fontpath.c_str(), fontsize);
 SDL_Texture* ftexture = NULL; // our font-texture
@@ -182,7 +182,7 @@ else {
 TTF_CloseFont(font);
 TTF_Quit();
 int x = 269;
-int y = 53;
+int y = 43;
 SDL_Rect dst = {x, y, t_width, t_height};
 SDL_RenderCopy(renderer, ftexture, NULL, &dst);
 
@@ -204,8 +204,10 @@ void MenuFin::render(){
 }
 
 void MenuFin::clean(){
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
+	if(window != nullptr){
+	SDL_DestroyWindow(window);}
+	if(renderer != nullptr){
+	SDL_DestroyRenderer(renderer);}
 	SDL_Quit();
 	std::cout << "fin " << std::endl;
 }

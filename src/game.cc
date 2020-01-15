@@ -171,11 +171,11 @@ void Game::setScore(){
 	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
 	   exit(EXIT_FAILURE);
 	  }
-int fontsize = 40;
+int fontsize = 120;
 int t_width = 0; // width of the loaded font-texture
 int t_height = 0; // height of the loaded font-texture
 SDL_Color text_color = {250,100,88};
-std::string fontpath = "src/OpenSans-Bold.ttf";
+std::string fontpath = "src/game_over.ttf";
 std::string text ="Kill :"+std::to_string(killed);
 TTF_Font* font = TTF_OpenFont(fontpath.c_str(), fontsize);
 SDL_Texture* ftexture = NULL; // our font-texture
@@ -224,11 +224,11 @@ void Game::setTimer(){
 	   fprintf(stderr, "Erreur à l'initialisation de la SDL : %s\n", SDL_GetError());
 	   exit(EXIT_FAILURE);
 	  }
-int fontsize = 40;
+int fontsize = 120;
 int t_width = 0; // width of the loaded font-texture
 int t_height = 0; // height of the loaded font-texture
 SDL_Color text_color = {45,150,88};
-std::string fontpath = "src/OpenSans-Bold.ttf";
+std::string fontpath = "src/game_over.ttf";
 std::chrono::duration<double> elapsed_seconds=temps_fin-(std::chrono::steady_clock::now());
 std::string text = "Timer :"+std::to_string(int(elapsed_seconds.count()));
 TTF_Font* font = TTF_OpenFont(fontpath.c_str(), fontsize);
